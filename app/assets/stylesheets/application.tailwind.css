@@ -1,0 +1,67 @@
+@tailwind base;
+
+@layer base {
+  @font-face {
+    font-family: 'SVN-Gilroy';
+    font-weight: 200;
+    font-style: normal;
+    src: url('assets/fonts/SVN-Gilroy Xlight.otf') format('otf');
+  }
+
+  @font-face {
+    font-family: 'SVN-Gilroy';
+    font-weight: 200;
+    font-style: italic;
+    src: url('assets/fonts/SVN-Gilroy Thin Italic.otf') format('otf');
+  }
+
+  @font-face {
+    font-family: 'SVN-Gilroy';
+    font-weight: 300;
+    font-style: normal;
+    src: url('assets/fonts/SVN-Gilroy Light.otf') format('otf');
+  }
+
+  @font-face {
+    font-family: 'SVN-Gilroy';
+    font-weight: 300;
+    font-style: italic;
+    src: url('assets/fonts/SVN-Gilroy Light Italic.otf') format('otf');
+  }
+
+  @font-face {
+    font-family: 'SVN-Gilroy';
+    font-weight: 400; /* Replacing 500 with 400 as per standard CSS font-weight naming */
+    font-style: normal;
+    src: url('assets/fonts/SVN-Gilroy Regular.otf') format('otf');
+  }
+
+  @font-face {
+    font-family: 'SVN-Gilroy';
+    font-weight: 900;
+    font-style: normal;
+    src: url('assets/fonts/SVN-Gilroy Black.otf') format('otf');
+  }
+
+  @font-face {
+    font-family: 'SVN-Gilroy';
+    font-weight: 900;
+    font-style: italic;
+    src: url('assets/fonts/SVN-Gilroy Black Italic.otf') format('otf');
+  }
+
+  body {
+    font-family: 'SVN-Gilroy', sans-serif;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;
+
+/*
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-blue-200;
+  }
+}
+*/

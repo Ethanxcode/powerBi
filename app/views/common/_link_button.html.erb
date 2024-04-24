@@ -1,0 +1,17 @@
+<%
+=begin%>
+
+   FILEPATH: /home/ethan/workspaces/ruby/blazer/app/views/common/_link_button.html.erb 
+	This partial represents a link button in HTML.erb format.
+	It generates a link with customizable attributes such as route, link_path, classes, color, hoverColor, icon, and text.
+	The link button is styled with CSS classes for appearance and hover effects.
+	If an icon is provided, it will be displayed before the text.
+<%
+
+=end%>
+<%= link_to , link_path, class: "#{defined?(classes) ? classes : 'flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md'} #{defined?(color) ? color : ''} hover:#{defined?(hoverColor) ? hoverColor : color}" do %>
+	<% if defined?(icon) && icon %>
+		<%= image_tag(icon, class: "") %>
+	<% end %>
+	<span class="text-base font-bold -text--text-white"><%= defined?(text) ? text : '' %></span>
+<% end %>

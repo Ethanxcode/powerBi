@@ -1,0 +1,32 @@
+<div class=" flex flex-col   w-[15.75rem]  flex-shrink-0  bg-white h-full gap-[25px] p-4 ">
+  <div class="flex items-center justify-center gap-[11.15px] h-[68px] ">
+    <%= link_to root_path do %>
+      <%= image_tag("logo/daithuanLogo.png") %>
+    <% end %>
+    <%= link_to root_path do %>
+      <%= image_tag("logo/daithuanText.png") %>
+    <% end %>
+  </div>
+  <div class="overflow-y-hidden overflow-x-hidden flex-grow">
+    <% @sidebar_items.each do |section| %>
+      <div class="px-3 py-[0.625rem] rounded-[8px]">
+        <div class="flex flex-row items-start self-stretch">
+          <span class="text-sm font-normal -text--black-40%"><%= section[:title] %></span>
+        </div>
+      </div>
+      <ul class="sidebar_lists flex flex-col gap-[5px]">
+        <% section[:items].each do |item| %>
+          <li>
+            <%= link_to item[:path], class: "relative flex flex-row items-center  #{'-bg--black-5%' if request.path == "/#{item[:path]}"} 
+        #{'-bg--black-5%' if current_page?(item[:path])}  focus:outline-none rounded-[6px] gap-[4px] flex-wrap self-stretch hover:-bg--black-5% px-2 py-2.5 text-black text-sm text-normal hover:text-gray-800 border-transparent " do %>
+              <span class="inline-flex justify-center items-center ">
+                <%= image_tag(item[:icon], class: "size-[20px]") %>
+              </span>
+              <span class="ml-[0.625rem] font-normal text-sm tracking-wide truncate"><%= item[:name] %></span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

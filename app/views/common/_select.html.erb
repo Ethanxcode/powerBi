@@ -1,0 +1,18 @@
+<% if defined?(options) %>
+    <div class="date_sort_select | w-full flex items-center <%= defined?(position) ? position : '' %>">
+        <% if defined?(selectTitle) %>
+            <span class="mr-[5px] text-base font-normal"><%= selectTitle %></span>
+        <% end %>
+        <select 
+            style="--tw-ring-offset-shadow: none; --tw-ring-shadow: none;"
+            class="inline-flex max-w-[130px] cursor-pointer items-center py-[5px] 
+            rounded-[4px]
+            -bg--bg-base border -text--text-base  -border--border-01 
+            hover:-bg--black-5% dark:hover:-bg--black-5%
+            font-medium text-sm focus:-border--border-01 dark:-border--black-40% dark:hover:-border--black-40%">
+            <% options.each do |option| %>
+                <option value="<%= option[:value] %>"><%= option[:text] %></option>
+            <% end %>
+        </select>
+    </div>
+<% end %>

@@ -1,0 +1,29 @@
+<%
+=begin%>
+ FILEPATH: /home/ethan/workspaces/ruby/blazer/app/views/common/_button.html.erb -->
+
+<!--
+  This partial represents a button component that can be used in various views.
+  It accepts the following optional parameters:
+  - classes: Additional CSS classes to be applied to the button element.
+  - color: The background color of the button.
+  - hoverColor: The background color of the button on hover.
+  - icon: The path to an image file to be displayed as an icon within the button.
+  - text: The text content of the button.
+
+  Example usage:
+  <%= render partial: 'common/button', locals: { classes: 'my-button', color: 'blue', hoverColor: 'lightblue', icon: 'path/to/icon.png', text: 'Click me' } %>
+<%
+=end%>
+
+
+<button class="
+<%= defined?(classes) ? classes : 
+'flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md' %>
+  <%= defined?(color) ? color : '' %>
+  hover:<%= defined?(hoverColor) ? hoverColor : color %>">
+  <% if defined?(icon) && icon %>
+    <%= image_tag(icon, class: "") %>
+  <% end %>
+  <span class="text-base font-bold -text--text-white" ><%= defined?(text) ? text : '' %><span>
+</button>

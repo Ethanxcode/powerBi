@@ -1,0 +1,51 @@
+
+<% daithuan_title "Tổng Quan" %>
+<%= render partial: 'overview/components/overview_header' %>
+<%= render partial: 'overview/components/widget' %>
+<div class="grid grid-flow-row grid-cols-2 gap-[25px]">
+    <%= render partial: 'common/table', 
+    locals: 
+        {
+        titleTable: 'Lương nhân viên',
+        color: 'bg-gradient-to-r -from--brand-01  -to--color-orange',
+        tableHeader:['STT', 'Mã nhân viên', 'Tên nhân viên', 'Lương', 'Thưởng'],
+        data: @employees,
+        href: 'overview/employee'
+        } 
+    %>
+
+     <%= render partial: 'common/table', 
+    locals: 
+        {
+        titleTable: 'Lương nhân viên',
+        color: 'bg-gradient-to-r -from--brand-01  -to--color-orange',
+        tableHeader:['STT', 'Mã nhân viên', 'Tên nhân viên', 'Lương', 'Thưởng'],
+        data: @employees,
+        href: 'overview/employee'
+        } 
+    %>
+
+     <%= render partial: 'common/table', 
+    locals: 
+        {
+        titleTable: 'Đơn hàng',
+        tableHeader:['name', 'status', 'date', 'progress'],
+        data: @orders,
+        href: 'overview/employee'
+        } 
+    %>
+
+    
+     <%= render partial: 'common/table', 
+    locals: 
+        {
+        titleTable: 'Lương nhân viên',
+        color: 'bg-gradient-to-r -from--brand-01  -to--color-orange',
+        tableHeader:['STT', 'Mã nhân viên', 'Tên nhân viên', 'Lương', 'Thưởng'],
+        data: @employees,
+        href: 'overview/employee'
+        } 
+    %>
+
+
+</div>

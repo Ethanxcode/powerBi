@@ -1,0 +1,154 @@
+<%
+=begin%>
+FILEPATH: /home/ethan/workspaces/ruby/blazer/app/views/common/_table.html.erb 
+This partial represents a common table component used in the application.
+It displays a table with headers and rows of data.
+The table can have a title, a link for more details, pagination, and options for filtering and exporting data.
+The table is responsive and supports scrolling for large datasets.
+<%
+=end%>
+<div>
+  <!-- Table container -->
+  <div class="shadow-md md:p-[15px] xxl:p-[25px] rounded-[12px] h-full  <%= defined?(pagination) ? 'md:max-h-[1237px]' : ' md:max-h-[320px]' %>">
+    <!-- Table header -->
+    <div class="-text--text-base text-sm flex justify-between items-center mb-[20px] ">
+      <% if defined?(titleTable) || defined?(href) %>
+        <h1 class="font-bold"><%= defined?(titleTable) ? titleTable : "" %></h1>
+        <%= link_to 'Xem chi tiết', defined?(href) ? href : "/", class: "font-normal text-sm underline" %>
+      <% elsif defined?(pagination) %>
+        <%= render partial: 'common/select', locals: { selectTitle: 'Hiển thị', options: @itemsPerpage} %>
+        <%= render partial: "common/button", locals: {  color: "-bg--brand-01 ", icon: "icons/mdi_filter.svg",  text: "Lọc" } %>
+      <% end %>
+    </div>
+    <!-- Table body -->
+    <div class="h-full <%= defined?(pagination)  ? 'overflow-x-scroll ' : 'md:max-h-[236px] xxl:max-h-[264px]' %> ">
+      <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400 ">
+        <!-- Table header row -->
+        <thead class="text-xs capitalize max-h-[30px] overflow-x-scroll <%= defined?(color) ? color + ' -text--text-white' : 'uppercase -text--text-base ' %>">
+          <tr>
+            <% tableHeader.each_with_index do |header, index| %>
+              <th class="<%= index == 0  && header.include?('STT') ? 'w-[32px]' : ' px-[10px]' %> <%= defined?(pagination) ? 'min-w-[170px]  w-full ' : '' %> py-[10px] text-balance  ">
+                <%= header %>
+              </th>
+            <% end %>
+          </tr>
+        </thead>
+        <% if !defined?(color) %>
+          <!-- Table divider row -->
+          <td colspan="<%= tableHeader.length %>" class="h-[34px]">
+            <div class="divide-y h-[1px] my-[17px] -bg--devide-color"></div>
+          </td>
+        <% end %>
+        <tbody>
+          <% if data.blank? || data.nil? %>
+            <!-- No data row -->
+            <tr>
+              <td colspan="100%" style="text-wrap: nowrap; padding: 24px;" class="w-full text-center   text-2xl font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r -from--brand-01 -to--color-orange ">
+                Không có dữ liệu! 
+              </td>
+            </tr>
+          <% else %>
+            <% data.each_with_index do |item, index| %>
+              <!-- Data row -->
+              <tr class="<%= index == data.length - 1 ? 'border-b-0' : 'border-b' %> <%= !defined?(color) ? 'text-sm' : 'text-[12px] leading-2' %>  bg-white capitalize dark:bg-gray-800 -text--text-base font-normal dark:-border--border-grey hover:-bg--black-5% text-center dark:hover:-bg--black-5%">
+                <% if defined?(pagination) %>
+                  <!-- Action column -->
+                  <td scope="row" class="<%= !defined?(pagination) ? 'py-[10px]' : 'p-[10px]' %> font-medium whitespace-nowrap dark:-text--text-white">
+                    <% detailRoute = "edit_#{route}_path" %>
+                    <% detailPath = send(detailRoute, item['id']) %>
+                    <%= link_to detailPath, class: 'flex justify-center items-center' do %>
+                      <span class="-bg--color-orange p-[5px] flex justify-center items-center size-[16px] rounded-[2px]">
+                        <%= image_tag 'icons/pen-vector.svg' %>
+                      </span>
+                    <% end %>
+                  </td>
+                  <!-- Index column -->
+                  <td scope="row" class="font-medium whitespace-nowrap w-[33px] dark:-text--text-white">
+                    <%= index + 1 %>
+                  </td>
+                <% end %>
+                <% data = item.respond_to?(:attributes) ? item.attributes : item %>
+                <% column_count = 0 %>
+                <% data.each do |key, value| %>
+                  <% if defined?(tableHeader) && column_count >= tableHeader.length - 1 %>
+                    <% break %>
+                  <% else %>
+                    <% column_count += 1 %>
+                    <% unless key == 'id' %>
+                      <% if key == 'status' %>
+                        <!-- Status column -->
+                        <td>
+                          <div class="flex items-center justify-center">
+                            <% if value.is_a?(String) %>
+                              <%= display_status(value.downcase) %>
+                            <% else %>
+                              <%= display_boo_status(value) %>
+                            <% end %>
+                          </div>
+                        </td>
+                      <% else %>
+                        <!-- Data column -->
+                        <td class="truncate <%= !defined?(pagination) ? 'py-[10px]' : 'p-[10px] ' %> ">
+                          <% if value.is_a?(Time) %>
+                            <%= value.strftime("%d/%m/%Y") %>
+                          <% else %>
+                            <%= value || "Trống" %>
+                          <% end %>
+                        </td>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <% unless data.blank? %>
+      <% if defined?(pagination) %>
+        <!-- Pagination section -->
+        <div class="mt-[20px]">
+          <div class="py-[5px] flex justify-between items-center">
+            <!-- Export button -->
+            <%= link_to(send("export_#{route}_index_path", format: :xlsx), class: "flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--brand-01 rounded-[6px] hover:-bg--brand-02 rounded-[6px]") do %>
+              <%= image_tag("icons/uil-file-export.svg") %>
+              <span class="text-base font-bold -text--text-white">Xuất dữ liệu</span>
+            <% end %>
+            <!-- Pagination navigation -->
+            <%== pagy_nav(@pagy) %>
+            <%
+=begin%>
+            <nav aria-label="Page navigation" class="flex  justify-center  items-center gap-[10px]">
+              <%= link_to 'previous', class: 'flex items-center justify-center size-[50px] ms-0 leading-tight  border -border--color-grey-2 rounded-[12px] focus:-outline--border-grey focus:-border--black-40% hover:shadow-inner -bg--bg-base disabled:opacity-50' do %>
+                <%= image_tag("icons/ic_left-chevron.svg") %>
+              <% end %>
+              <ul class="inline-flex rounded-[14px] -space-x-px text-sm -border--color-grey-2 border">
+                <li>
+                  <%= link_to '1', class: "bg-gradient-to-r -from--brand-01 -to--color-orange rounded-[12px] -text--text-white flex items-center justify-center  size-[51px] leading-tight focus:-outline--border-grey focus:opacity-100 focus:-border--black-40% hover:shadow-inner hover:opacity-95 shadow-[0_7px_16px_0px_rgba(0,0,0,0.14)] -bg--bg-base disabled:opacity-50" do %>
+                    1
+                  <% end %>
+                </li>
+                <li>
+                  <a href="#" aria-current="page" class="rounded-[12px] -text--text-base flex items-center justify-center  size-[51px] leading-tight focus:-outline--border-grey dark:focus:-outline--border-grey focus:-border--black-40% hover:shadow-inner hover:-bg--black-5% disabled:opacity-50">3</a>
+                </li>
+                <li>
+                  <a href="#"class="rounded-[12px] -text--text-base flex items-center justify-center  size-[51px] leading-tight focus:-outline--border-grey dark:focus:-outline--border-grey focus:-border--black-40% hover:shadow-inner hover:-bg--black-5% disabled:opacity-50">4</a>
+                </li>
+                `
+                <li>`
+                  <a href="#" class="rounded-[12px] -text--text-base flex items-center justify-center  size-[51px] leading-tight focus:-outline--border-grey dark:focus:-outline--border-grey focus:-border--black-40% hover:shadow-inner hover:-bg--black-5% disabled:opacity-50">5</a>
+                </li>
+              </ul>
+              <%= link_to 'next',  class: 'flex items-center justify-center size-[50px] ms-0 leading-tight  border -border--color-grey-2 rounded-[12px] focus:-outline--border-grey focus:-border--black-40% hover:shadow-inner -bg--bg-base disabled:opacity-50' do %>
+                <%= image_tag("icons/ic_right-chevron.svg") %>
+              <% end %>
+            </nav>
+            <%
+=end%>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

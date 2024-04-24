@@ -1,0 +1,42 @@
+<div class="flex items-end gap-[25px] w-full">
+  <div class="flex flex-col w-full">
+    <span class="mb-[10px] text-base font-normal">Tìm kiếm</span>
+    <input class="-bg--bg-base hover:-bg--black-5% -text--text-base placeholder:-text--text-placeholder block w-full py-[24px] px-[12px] text-gray-900 dark:text-white focus:-outline--border-grey dark:-outline--border-grey hover:-bg--black-5 rounded-[6px]" placeholder="--- Vui lòng nhập ---">
+  </div>
+  <% if defined?(options) %>
+    <div class="date_sort_select | flex items-center <%= defined?(position) ? position : '' %>">
+      <div class="flex flex-col">
+        <span class="mb-[10px] text-base font-normal">Loại tìm kiếm</span>
+        <select style="--tw-ring-offset-shadow: none; --tw-ring-shadow: none;" class="-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50 dark:text-white focus:-outline--border-grey dark:-outline--border-grey rounded-[6px]">
+          <% options.each do |option| %>
+            <option value="<%= option[:value] %>"><%= option[:text] %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+  <% end %>
+  <% if defined?(fromDate) %>
+    <div class="flex flex-col">
+      <span class="mb-[10px] text-base font-normal"><%= fromDate %></span>
+      <div class="relative">
+        <div class="absolute inset-y-0 end-0 flex items-center pe-3 pointer-events-none">
+          <%= image_tag 'icons/calendar.svg' %>
+        </div>
+        <input name="from" type="date" style="--tw-ring-offset-shadow: none; --tw-ring-shadow: none;" class="-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50 dark:text-white focus:-outline--border-grey dark:focus:-outline--border-grey rounded-[6px]">
+      </div>
+    </div>
+  <% end %>
+  <% if defined?(toDate) %>
+    <div class="flex flex-col">
+      <span class="mb-[10px] text-base font-normal"><%= toDate %></span>
+      <div class="relative">
+        <div class="absolute inset-y-0 end-0 flex items-center pe-3 pointer-events-none">
+          <%= image_tag 'icons/calendar.svg' %>
+        </div>
+        <input name="to" type="date" style="--tw-ring-offset-shadow: none; --tw-ring-shadow: none;" class="-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50 dark:text-white focus:-outline--border-grey dark:-outline--border-grey rounded-[6px]">
+      </div>
+    </div>
+  <% end %>
+  <%= render partial: "common/button", locals: { color: "-bg--grey ", text: "Xóa" } %>
+  <%= render partial: "common/button", locals: { color: "bg-gradient-to-r -from--brand-01 -to--color-orange", text: "Tìm kiếm" } %>
+</div>

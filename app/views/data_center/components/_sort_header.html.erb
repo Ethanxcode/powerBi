@@ -1,0 +1,35 @@
+<div class="pt-[25px]">
+<div class="flex justify-between gap-[25px] items-center flex-nowrap mb-[25px]">
+ <h2 class=" text-2xl font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r -from--brand-01 -to--color-orange  ">Trung Tâm Dữ Liệu</h2>
+  <div class="flex justify-between gap-[25px] items-center">
+      <%
+=begin%>
+ <p class="text-base italic font-light"> (Last sync at 12:00:00 pm - 01/12/2023)</p> 
+<%
+=end%>
+        <p class="text-base italic font-light">( Last sync at <%= last_sync_time_for_table('users') %> )</p>
+
+      
+    <%
+=begin%>
+ <%= render partial: "common/button", locals: {  color: "-bg--color-green-4", icon: "icons/radix-icons_update.svg", text: "Synchronized" } %> 
+<%
+=end%>
+
+
+    <%= button_to  import_data_center_index_path, method: :post, class: "flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-green-4" do %>
+    <%= image_tag('icons/radix-icons_update.svg') %>
+    <span class="text-base font-bold -text--text-white">Synchronized</span>
+  <% end %>
+  
+    <%= render partial: "common/button", locals: {  color: "-bg--color-blue", icon: "icons/mdi_report-box-plus-outline", text: "Tạo nhóm báo cáo" } %>
+  </div>
+</div>
+</div>
+
+<div class="py-[25px]">
+  <div class="w-full justify-between py-[25px]">
+    <%= render partial: "common/picker", locals: { fromDate: 'Từ ngày', toDate: 'Đến ngày', selectTitle: 'Loại tìm kiếm', options: @itemsPerpage }%>
+</div>
+
+</div>

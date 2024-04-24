@@ -1,0 +1,20 @@
+<%= render partial: 'common/select', locals: { position: 'justify-end', options: @dateRange} %>
+
+<div class="py-[25px]">
+<div class="flex justify-between gap-[25px] items-center flex-nowrap mb-[25px]">
+ <h2 class="  text-2xl font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r -from--brand-01 -to--color-orange  ">Tổng quan</h2>
+  <div class="flex justify-between gap-[25px] items-center">
+      <p class="text-base italic font-light"> (Last sync at 12:00:00 pm - 01/12/2023)</p>
+    <%= render partial: "common/button", locals: {  color: "-bg--color-green-4", icon: "icons/radix-icons_update.svg", text: "Synchronized" } %>
+    <%= render partial: "common/button", locals: {  color: "-bg--color-blue", icon: "icons/mdi_report-box-plus-outline", text: "Tạo nhóm báo cáo" } %>
+  </div>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex gap-[25px]">
+    <%= render partial: "common/button", locals: {  color: "-bg--brand-01", text: "Nhóm thống kê 01" } %>
+    <%= render partial: "common/button", locals: {  color: "-bg--grey ", text: "Nhóm thống kê 02" } %>
+    <%= render partial: "common/button", locals: {  color: "-bg--grey ", text: "Nhóm thống kê 03" } %>
+</div>
+    <%= render partial: "common/button", locals: {  color: "-bg--brand-01 ", icon: "icons/setting-4.svg",  text: "Custom" } %>
+</div>
+</div>

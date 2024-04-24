@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  record_name: MyString
+  last_sync_time: 2024-03-28 13:43:42
+
+two:
+  record_name: MyString
+  last_sync_time: 2024-03-28 13:43:42

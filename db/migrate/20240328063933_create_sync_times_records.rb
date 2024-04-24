@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSyncTimesRecords < ActiveRecord::Migration[7.1]
   def change
     create_table :sync_times_records do |t|

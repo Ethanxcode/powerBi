@@ -16,10 +16,20 @@ Rails.application.routes.draw do
       end
     end
 
+
+
     resources :users, only: [:index, :edit, :show, :export] do
       collection do
         get :export
         post :import
+      end
+    end
+
+    resources :sync_dms, only: [:index, :edit, :show, :export], path: 'sync-dms' do
+      collection do
+        get :export
+        post :import
+        post :import_from_files
       end
     end
 

@@ -4,31 +4,31 @@
   <!-- Section header 1 -->
   <div class="flex justify-between gap-[25px] items-center flex-nowrap mb-[25px]">
     <h2 class=" text-2xl font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r -from--brand-01 -to--color-orange  ">Quản lý người dùng</h2>
-    <p class="text-base italic font-light">( Last sync at <%= last_sync_time_for_table('users') %> )</p>
-    <%= button_to  import_users_path, method: :post, class: "flex justify-center items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-green-4" do %>
-      <%= image_tag('icons/radix-icons_update.svg') %>
+    <p class="text-base italic font-light">( Last sync at <%= last_sync_time_for_table("users") %> )</p>
+    <%= button_to import_users_path, method: :post, class: "flex justify-center items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-green-4" do %>
+      <%= image_tag("icons/radix-icons_update.svg") %>
       <span class="text-base font-bold -text--text-white">Synchronized</span>
     <% end %>
-    <%= render partial: "common/button", locals: {  color: "-bg--color-blue", icon: "icons/mdi_report-box-plus-outline", text: "Tạo nhóm báo cáo" } %>
+    <%= render partial: "common/button", locals: { color: "-bg--color-blue", icon: "icons/mdi_report-box-plus-outline", text: "Tạo nhóm báo cáo" } %>
   </div>
 </div>
 <!-- End section header 1 -->
 <!-- Section header 2 -->
 <div class="py-[25px]">
   <!-- form section header 2  -->
-  <%= search_form_for @q, class: 'w-full justify-between py-[25px]', data:{turbo_frame: :result, turbo_action: 'advance'} do |f| %>
+  <%= search_form_for @q, class: "w-full justify-between py-[25px]", data: { turbo_frame: :result, turbo_action: "advance" } do |f| %>
     <div class="flex items-end gap-[25px] w-full">
       <div class="flex flex-col w-full">
-        <%= f.label :full_name_or_email_or_cont,"Tìm kiếm", class: 'mb-[10px] text-base font-normal' %>
-        <%= f.search_field :full_name_or_email_cont, class: "-bg--bg-base hover:-bg--black-5% -text--text-base placeholder:-text--text-placeholder block w-full py-[24px] px-[12px] text-gray-900 border-none focus:-outline--border-grey dark:-outline--border-grey hover:-bg--black-5 rounded-[6px]", placeholder: '--- Vui lòng nhập ---' %>
+        <%= f.label :full_name_or_email_or_cont, "Tìm kiếm", class: "mb-[10px] text-base font-normal" %>
+        <%= f.search_field :full_name_or_email_cont, class: "-bg--bg-base hover:-bg--black-5% -text--text-base placeholder:-text--text-placeholder block w-full py-[24px] px-[12px] text-gray-900 border-none focus:-outline--border-grey dark:-outline--border-grey hover:-bg--black-5 rounded-[6px]", placeholder: "--- Vui lòng nhập ---" %>
         <!--  onchange sumbit version
-                <%= f.search_field :full_name_or_email_cont, oninput: 'this.form.requestSubmit();', class: "-bg--bg-base hover:-bg--black-5% -text--text-base placeholder:-text--text-placeholder block w-full py-[24px] px-[12px] text-gray-900 border-none dark:-text--text-white  focus:-outline--border-grey dark:-outline--border-grey hover:-bg--black-5 rounded-[6px]", placeholder: '--- Vui lòng nhập ---' %>
+                <%= f.search_field :full_name_or_email_cont, oninput: "this.form.requestSubmit();", class: "-bg--bg-base hover:-bg--black-5% -text--text-base placeholder:-text--text-placeholder block w-full py-[24px] px-[12px] text-gray-900 border-none dark:-text--text-white  focus:-outline--border-grey dark:-outline--border-grey hover:-bg--black-5 rounded-[6px]", placeholder: "--- Vui lòng nhập ---" %>
 -->
       </div>
       <div class="flex flex-col">
         <%= f.label :sorts, "Loại tìm kiếm", class: "mb-[10px] text-base font-normal" %>
         <div class="date_sort_select w-full flex items-center">
-          <%= f.select :sorts, options_for_select(users_table_headers.map { |key, value| [key, value] }), { include_blank: 'Loại' }, { class: "-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50 focus:-outline--border-grey dark:focus:-outline--border-grey rounded-[6px]", style: '--tw-ring-offset-shadow: none; --tw-ring-shadow: none;' } %>
+          <%= f.select :sorts, options_for_select(users_table_headers.map { |key, value| [key, value] }), { include_blank: "Loại" }, { class: "-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50 focus:-outline--border-grey dark:focus:-outline--border-grey rounded-[6px]", style: "--tw-ring-offset-shadow: none; --tw-ring-shadow: none;" } %>
         </div>
       </div>
       <div class="flex flex-col">
@@ -53,7 +53,7 @@
 =end%>
 <%
 =begin%>
-<%= turbo_frame_tag 'time_zone' do %>
+<%= turbo_frame_tag "time_zone" do %>
   <%= Time.zone.now %>
 <% end %>
 <%
@@ -61,21 +61,21 @@
 <%
 =begin%>
 <% PAGE_SIZES.each do |size| %>
-  <%= link_to size, url_for(per_page: size), class:"dropdown-item"%>
+  <%= link_to size, url_for(per_page: size), class: "dropdown-item"%>
 <% end %>
 <%
 =end%>
 <%
 =begin%>
-<%= search_form_for @q, class: 'w-full justify-between py-[25px]' do |f| %>
+<%= search_form_for @q, class: "w-full justify-between py-[25px]" do |f| %>
   <div class="flex items-end gap-[25px] w-full">
     <div>
       <div class="flex flex-col w-full">
-        <%= f.label :full_name_or_email_or_phone_number_cont,"Tìm kiếm" , class: 'mb-[10px] text-base font-normal' %>
-        <%= f.search_field :full_name_or_email_or_phone_number_cont, class: "-bg--bg-base hover:-bg--black-5% -text--text-base placeholder:-text--text-placeholder block w-full py-[24px] px-[12px] text-gray-900 border-none dark:text-white focus:-outline--border-grey dark:-outline--border-grey hover:-bg--black-5 rounded-[6px]", placeholder: '--- Vui lòng nhập ---' %>
+        <%= f.label :full_name_or_email_or_phone_number_cont, "Tìm kiếm", class: "mb-[10px] text-base font-normal" %>
+        <%= f.search_field :full_name_or_email_or_phone_number_cont, class: "-bg--bg-base hover:-bg--black-5% -text--text-base placeholder:-text--text-placeholder block w-full py-[24px] px-[12px] text-gray-900 border-none dark:text-white focus:-outline--border-grey dark:-outline--border-grey hover:-bg--black-5 rounded-[6px]", placeholder: "--- Vui lòng nhập ---" %>
       </div>
       <%= f.label :status_eq %>
-      <%= f.select :status_eq, [true, false], {include_blank: true}, style: "width: 200px;" %>
+      <%= f.select :status_eq, [true, false], { include_blank: true }, style: "width: 200px;" %>
       <%= f.submit "Tìm kiếm", class: "-bg--brand-01 flex text-base font-bold -text--text-white justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md" %>
     <% end %>
     <%
@@ -88,7 +88,7 @@
           <%
 =begin
 %>
-          <%= render partial: 'common/select', locals: { selectTitle: 'Hiển thị', options: @itemsPerpage} %>
+          <%= render partial: "common/select", locals: { selectTitle: "Hiển thị", options: @itemsPerpage } %>
           <%
 =end
 %>
@@ -109,10 +109,10 @@
               <% end %>
             </select>
           </div>
-          <%= render partial: "common/button", locals: {  color: "bg-gradient-to-r -from--brand-01 -to--color-orange ", icon: "icons/mdi_filter.svg",  text: "Lọc" } %>
+          <%= render partial: "common/button", locals: { color: "bg-gradient-to-r -from--brand-01 -to--color-orange ", icon: "icons/mdi_filter.svg", text: "Lọc" } %>
         </div>
         <!-- Table body -->
-        <%= turbo_frame_tag :result, data: { turbo_action: 'advance'} do %>
+        <%= turbo_frame_tag :result, data: { turbo_action: "advance" } do %>
           <%= Time.zone.now %>
           <div class="h-full overflow-x-scroll  ">
             <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400 ">
@@ -120,7 +120,7 @@
               <thead class="text-xs capitalize max-h-[30px] overflow-x-scroll bg-gradient-to-r -from--brand-01 -to--color-orange -text--text-white">
                 <tr>
                   <% users_table_headers.each_with_index do |header, index| %>
-                    <th class="<%= index == 0  && header.include?('STT') ? 'w-[32px]' : ' px-[10px]' %> min-w-[170px]  w-full py-[10px] text-balance ">
+                    <th class="<%= index == 0 && header.include?("STT") ? "w-[32px]" : " px-[10px]" %> min-w-[170px]  w-full py-[10px] text-balance ">
                       <%= header %>
                     </th>
                   <% end %>
@@ -137,12 +137,12 @@
                 <% else %>
                   <% @users.each_with_index do |item, index| %>
                     <!-- Data row -->
-                    <tr class="<%= 'border-b-0' if index == @users.length - 1 %> text-[12px] leading-2 bg-white capitalize dark:bg-gray-800 text-text-base font-normal dark:border-border-grey hover:bg-black-5% text-center dark:hover:bg-black-5%">
+                    <tr class="<%= "border-b-0" if index == @users.length - 1 %> text-[12px] leading-2 bg-white capitalize dark:bg-gray-800 text-text-base font-normal dark:border-border-grey hover:bg-black-5% text-center dark:hover:bg-black-5%">
                       <!-- Action column -->
                       <td scope="row" class="p-[10px] font-medium whitespace-nowrap ">
-                        <%= link_to(edit_user_path(item.id), class: 'flex justify-center items-center') do %>
+                        <%= link_to(edit_user_path(item.id), class: "flex justify-center items-center") do %>
                           <span class="-bg--color-orange p-[5px] flex justify-center items-center size-[16px] rounded-[2px]">
-                            <%= image_tag('icons/pen-vector.svg', alt: 'Edit') %>
+                            <%= image_tag("icons/pen-vector.svg", alt: "Edit") %>
                           </span>
                         <% end %>
                       </td>

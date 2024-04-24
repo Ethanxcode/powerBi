@@ -17,7 +17,9 @@
         number_with_delimiter(value)
       elsif value.is_a?(String) && value =~ DAITHUAN_URL_REGEX
         # see if image or link
-        if Daithuan.images && (key.include?("image") || DAITHUAN_IMAGE_EXT.include?(value.split(".").last.split("?").first.try(:downcase)))
+        if Daithuan.images &&
+          (key.include?("image") ||
+          DAITHUAN_IMAGE_EXT.include?(value.split(".").last.split("?").first.try(:downcase)))
           link_to value, target: "_blank", rel: "noopener" do
             image_tag value, referrerpolicy: "no-referrer"
           end

@@ -16,7 +16,9 @@
           number_with_delimiter(value)
         elsif value.is_a?(String) && value =~ BLAZER_URL_REGEX
           # see if image or link
-          if Blazer.images && (key.include?("image") || BLAZER_IMAGE_EXT.include?(value.split(".").last.split("?").first.try(:downcase)))
+          if Blazer.images &&
+            (key.include?("image") ||
+             BLAZER_IMAGE_EXT.include?(value.split(".").last.split("?").first.try(:downcase)))
             link_to value, target: "_blank", rel: "noopener" do
               image_tag value, referrerpolicy: "no-referrer"
             end

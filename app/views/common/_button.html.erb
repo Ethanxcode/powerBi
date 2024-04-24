@@ -12,18 +12,18 @@
   - text: The text content of the button.
 
   Example usage:
-  <%= render partial: 'common/button', locals: { classes: 'my-button', color: 'blue', hoverColor: 'lightblue', icon: 'path/to/icon.png', text: 'Click me' } %>
+  <%= render partial: "common/button", locals: { classes: "my-button", color: "blue", hoverColor: "lightblue", icon: "path/to/icon.png", text: "Click me" } %>
 <%
 =end%>
 
 
 <button class="
 <%= defined?(classes) ? classes : 
-'flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md' %>
-  <%= defined?(color) ? color : '' %>
+"flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md" %>
+  <%= defined?(color) ? color : "" %>
   hover:<%= defined?(hoverColor) ? hoverColor : color %>">
   <% if defined?(icon) && icon %>
     <%= image_tag(icon, class: "") %>
   <% end %>
-  <span class="text-base font-bold -text--text-white" ><%= defined?(text) ? text : '' %><span>
+  <span class="text-base font-bold -text--text-white" ><%= defined?(text) ? text : "" %><span>
 </button>

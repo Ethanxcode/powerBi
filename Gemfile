@@ -102,7 +102,7 @@ group :development do
   gem "rufo"
 
   # For linting ERB files
-  gem "erb_lint", require: false, git: "https://github.com/Shopify/erb-lint.git", branch: "main"
+  gem "erb_lint", require: false
 end
 
 group :test do

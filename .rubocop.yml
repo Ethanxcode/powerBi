@@ -2,6 +2,7 @@
 require:
   - rubocop-performance
   - rubocop-rails
+  - rubocop-capybara
 
 AllCops:
   TargetRubyVersion: 3.2.2
@@ -16,24 +17,25 @@ AllCops:
   Exclude:
     - 'app/javascript/**/*'
     - 'app/assets/**/*'
-    - 'app/views/**/*.erb'
     - 'lib/tasks/**/*'
     - '.vscode/**/*'
-    - '.husky/**/*'
     - '.bundle/**/*'
     - '.circleci/**/*'
     - '.semaphore/**/*'
-    - '**/log/**/*'
     - '**/public/**/*'
+    - 'bin/**/*'
+    - '**/log/**/*'
     - '**/tmp/**/*'
     - '**/templates/**/*'
     - '**/vendor/**/*'
     - 'node_modules/**/*'
     - 'bin/**/*'
-    - 'config/webpack/**/*'
     - 'db/schema.rb'
     - '**/test/**/*'
     - '**/spec/**/*'
+    - 'Rakefile'
+    - 'config.ru'
+    - 'config/**/*'
 
 # ====================================================================================================
 # All access modifier related rules
@@ -86,6 +88,9 @@ Layout/CommentIndentation:
 # Requires an empty line after frozen_string_literal: true comment
 Layout/EmptyLineAfterMagicComment:
   Enabled: true
+
+Lint/UnusedMethodArgument:
+  Enabled: false
 
 # frozen_string_literal: true magic comment is required on the top of files
 Style/FrozenStringLiteralComment:
@@ -219,6 +224,18 @@ Lint/ParenthesesAsGroupedExpression:
 # when a boolean operator, && or ||, is chained along with this method/argument
 Lint/RequireParentheses:
   Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+Rails/Output:
+  Enabled: false
 
 # avoid redundant `return` expressions
 Style/RedundantReturn:

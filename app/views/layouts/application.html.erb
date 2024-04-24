@@ -12,12 +12,12 @@
   <body>
     <main class=" h-dvh md:mx-[80px]  xxl:mx-[160px]">
       <div class="container  flex relative w-full max-w-[1600px]">
-        <%= render partial: 'shared/notifications', locals: {message: flash[:notice]} %>
+        <%= render partial: "shared/notifications", locals: { message: flash[:notice] } %>
         <div class="min-h-screen pt-[10px] flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-50">
-          <%= render partial: 'shared/sidebar' %>
+          <%= render partial: "shared/sidebar" %>
         </div>
         <div class="w-full md:max-w-[1107px] xxl:max-w-[1337px] px-[25px] pb-[60px] ">
-          <%= render partial: 'shared/header' %>
+          <%= render partial: "shared/header" %>
           <%= yield %>
         </div>
       </div>

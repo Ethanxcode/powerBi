@@ -20,21 +20,21 @@ The user can also download the data centers in Excel format.
       <p class="text-base italic font-light"> (Last sync at 12:00:00 pm - 01/12/2023)</p>
       <%
 =end%>
-      <p class="text-base italic font-light">( Last sync at <%= last_sync_time_for_table('users') %> )</p>
+      <p class="text-base italic font-light">( Last sync at <%= last_sync_time_for_table("users") %> )</p>
       <%
 =begin%>
-      <%= render partial: "common/button", locals: {  color: "-bg--color-green-4", icon: "icons/radix-icons_update.svg", text: "Synchronized" } %>
+      <%= render partial: "common/button", locals: { color: "-bg--color-green-4", icon: "icons/radix-icons_update.svg", text: "Synchronized" } %>
       <%
 =end%>
-      <%= button_to  import_users_path, method: :post, class: "flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-green-4" do %>
-        <%= image_tag('icons/radix-icons_update.svg') %>
+      <%= button_to import_users_path, method: :post, class: "flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-green-4" do %>
+        <%= image_tag("icons/radix-icons_update.svg") %>
         <span class="text-base font-bold -text--text-white">Synchronized</span>
       <% end %>
       <div data-controller="common">
         <div class="hidden" >
           <%= form_with(url: import_from_files_data_center_index_path, method: :post, local: true, multipart: true) do |form| %>
             <%= form.file_field :file, id: "file-input" %>
-            <%= form.submit 'Import' %>
+            <%= form.submit "Import" %>
           <% end %>
         </div>
         <label  id="file-label" class="flex justify-center text-white items-center gap-[10px] py-[15px] max-w-[150px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-blue hover:-bg--color-blue" for="file-input">
@@ -47,33 +47,33 @@ The user can also download the data centers in Excel format.
 </div>
 <div class="py-[25px]">
   <div class="w-full justify-between py-[25px]">
-    <%= render partial: "common/picker", locals: { fromDate: 'Từ ngày', toDate: 'Đến ngày', selectTitle: 'Loại tìm kiếm', options: @itemsPerpage }%>
+    <%= render partial: "common/picker", locals: { fromDate: "Từ ngày", toDate: "Đến ngày", selectTitle: "Loại tìm kiếm", options: @itemsPerpage }%>
   </div>
 </div>
 <%
 =begin
 %>
-<%= render partial: 'common/table',
-locals:
-    {
-    items_per_page: 10,
-    pagination: true,
-    color: 'bg-gradient-to-r -from--brand-01  -to--color-orange',
-    tableHeader: user_table_headers,
-    data: @data_centers,
-    route: 'data_center',
-    } %>
+<%= render partial: "common/table",
+      locals:
+          {
+          items_per_page: 10,
+          pagination: true,
+          color: "bg-gradient-to-r -from--brand-01  -to--color-orange",
+          tableHeader: user_table_headers,
+          data: @data_centers,
+          route: "data_center"
+          } %>
 <%
 =end
 %>
-<%= render partial: 'common/table',
+<%= render partial: "common/table",
       locals: {
           items_per_page: 10,
           pagination: true,
-          color: 'bg-gradient-to-r -from--brand-01 -to--color-orange',
+          color: "bg-gradient-to-r -from--brand-01 -to--color-orange",
           tableHeader: user_table_headers,
           data: @user_management,
-          route: 'user',
+          route: "user"
       } %>
 <%
 =begin

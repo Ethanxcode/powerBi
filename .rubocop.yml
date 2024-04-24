@@ -2,6 +2,7 @@
 require:
   - rubocop-performance
   - rubocop-rails
+  - rubocop-capybara
 
 AllCops:
   TargetRubyVersion: 3.2.2
@@ -16,26 +17,12 @@ AllCops:
   Exclude:
     - 'app/javascript/**/*'
     - 'app/assets/**/*'
-    - 'app/views/**/*.erb'
     - 'lib/tasks/**/*'
     - '.vscode/**/*'
     - '.husky/**/*'
     - '.bundle/**/*'
     - '.circleci/**/*'
     - '.semaphore/**/*'
-    - '**/log/**/*'
-    - '**/public/**/*'
-    - '**/tmp/**/*'
-    - '**/templates/**/*'
-    - '**/vendor/**/*'
-    - 'node_modules/**/*'
-    - 'bin/**/*'
-    - 'db/schema.rb'
-    - '**/test/**/*'
-    - '**/spec/**/*'
-    - 'Rakefile'
-    - 'config.ru'
-    - 'config/**/*'
 
 # ====================================================================================================
 # All access modifier related rules

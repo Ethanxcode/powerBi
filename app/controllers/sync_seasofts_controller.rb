@@ -1,8 +1,8 @@
   # frozen_string_literal: true
 
   # Controller responsible for managing the warehouse functionality.
-  class SyncDmsController < BaseController
-    include SyncDmsHelper
+  class SyncSeasoftsController < BaseController
+    include SyncSeasoftHelper
     before_action :setup, only: [:index, :export]
 
     def index
@@ -39,7 +39,7 @@
     end
 
     def edit
-      @data_center = User.find(params[:id])
+      @detail = SyncSeasoft.find(params[:id])
     end
 
     # Retrieves data for the show page.
@@ -50,7 +50,7 @@
     private
 
       def setup
-        @q = SyncDms.ransack(params[:query])
+        @q = SyncSeasoft.ransack(params[:query])
         @pagy, @data = pagy(@q.result.all, items: params[:per_page] || 10)
       end
   end

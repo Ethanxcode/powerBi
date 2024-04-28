@@ -1,18 +1,22 @@
 <table>
   <thead>
     <tr>
-      <% @data.first.keys.each do |header| %>
-        <th><%= header %></th>
+      <% if @data %>
+        <% @data.first.keys.each do |header| %>
+          <th><%= header %></th>
+        <% end %>
       <% end %>
     </tr>
   </thead>
   <tbody>
-    <% @data.each do |row| %>
-      <tr>
-        <% row.values.each do |value| %>
-          <td><%= value %></td>
-        <% end %>
-      </tr>
+    <% if @data %>
+      <% @data.each do |row| %>
+        <tr>
+          <% row.values.each do |value| %>
+            <td><%= value %></td>
+          <% end %>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

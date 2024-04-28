@@ -1,21 +1,19 @@
 # frozen_string_literal: true
 # rubocop: disable all
 
-module SyncFilesHelper
+module SyncSeasoftHelper
   include BaseHelper
 
-  def sync_files_attributes
+  def sync_seasoft_attributes
     {
       "ID Chi tiết đơn hàng" => :order_detail_id,
       "STT" => :index, # Tên tạm thời cho số thứ tự
-      "Trạng thái DMS" => :dms_status,
       "Trạng thái SEASOFT" => :seasoft_status,
-      "Nguồn đơn" => :order_source,
       "Mã đơn hàng" => :order_code,
       "Mã khách hàng" => :customer_code,
       "Tên khách hàng" => :customer_name,
       "Điện thoại" => :phone_number,
-      "Địa chỉ giao hàng" => :shipping_addresss,
+      "Địa chỉ giao hàng" => :shipping_address,
       "Ngày bán hàng" => :order_date,
       "Mã SKU" => :sku_code,
       "Tên SKU" => :sku_name,

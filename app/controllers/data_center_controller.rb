@@ -3,21 +3,15 @@
 # Controller responsible for managing the data center functionality.
 # This module represents the V1 version of the DataCenterController.
   class DataCenterController < BaseController
+  skip_before_action :verify_authenticity_token
     helper DataCenterHelper
-
-
     before_action :set_data_centers, only: [:index, :export]
-
-
-
     # Retrieves data for the index page.
     def index
       # Generate a random date within a specific range.
       start_date = DateTime.parse("2020-01-01")
       end_date = DateTime.parse("2023-12-31")
       date = start_date + rand * (end_date - start_date)
-
-
 
 
       # Generate sample employee data.
@@ -122,34 +116,35 @@
       # render 'import'
     end
 
+
+
     def import
       Rails.logger.info "Starting perform_task in DataCenterController..."
       @result = prepare_get_data_from_host
       ip_address = request.remote_ip
       if @result
-          ActiveRecord::Base.transaction do
-            Rails.logger.info "Data retrieval successful. Inserting data from API..."
-            insert_data_from_api
-            Rails.logger.info "Data insertion complete."
-            SyncTimesRecord.update_sync_time('sync_files', ip_address)
-            # Tạm thời bỏi vì chưa có giao diện thành công hay lỗi
-            head :no_content
-        rescue => e
-          Rails.logger.error "An error occurred: #{e.message}"
-          Rails.logger.error "Rolling back transaction..."
-          puts "Opp! Has errors when transaction"
-          raise ActiveRecord::Rollback
-          Rails.logger.error "Transaction rolled back successfully."
-          # Phản hồi lỗi nếu cần thiết
-          head :unprocessable_entity
+        begin
+          Rails.logger.info "Data retrieval successful. Inserting data from API..."
+          insert_data_from_api
+          Rails.logger.info "Data insertion complete."
+          SyncTimesRecord.update_sync_time('data_center', ip_address)
+          flash[:notice] = "Last sync time by #{ip_address} for table data_center updated successfully."
+          return
+        rescue StandardError => e
+          Rails.logger.error "Error updating last sync time for table data_center #{e.message}"
+          flash[:alert] = "Error updating last sync time for table data_center #{e.message}"
         end
       else
         Rails.logger.error "Failed to retrieve data from the host API."
-        # Chỉ định phản hồi
+        flash[:alert] = "Failed to retrieve data from the host API."
         head :unprocessable_entity
+        return
       end
-    rescue NoMethodError
-      puts "Opp! Has errors"
+    rescue => e
+      Rails.logger.error "An error occurred: #{e.message}"
+      Rails.logger.error "Rolling back transaction..."
+      flash[:alert] = "An error occurred: #{e.message}"
+      head :unprocessable_entity
     end
 
     # Exports data to an Excel file.
@@ -190,15 +185,19 @@
       @pagy, @data_centers = pagy(User.all)
     end
 
-    # Inserts data from API if @result is present.
     def insert_data_from_api
-      User.insert_from_api(@result)
+      DataCenter.insert_from_api(@result)
     end
 
     # Prepares data for retrieval from the host API.
     def prepare_get_data_from_host
-      api_path = 'v0/datawarehouse/get-list-user-export'
-      importer = DataImporter.new(api_path)
+      api_url = 'https://api-doisoat.newweb.vn/api/normal/report/get-report-admin-orders'
+      query_string = 'code=DTP-HCM-2403000164&customer_name=&customer_code=&customer_phone=&partner_name=&status=&order_channel=&payment_status=&distributor_id=&distributor_code=&distributor_name=&from=&to=&order_type=&customer_group_code=&city_code=&city_name=&district_code=&district_name=&ward_code=&ward_name=&shipping_method_code=&customer_group_name=&product_code=&product_name=&payment_method=&qr_scan=&outvat=&transfer_confirmation=&payment_code=&lading_method=&shipping_note=&is_seller=&status_crm=&weight_form=&weight_to=&seller_full_name=&seller_id=&leader_id=&leader_full_name=&order_source=&saleman_code=&saleman_name=&area_code=&warehouse_name=&warehouse_code=&status_seasoft=&channel=&bill_no=&is_seasoft=&only_saleman=&chain_id=&all_order_child=1&po_number=&like_code=&time=12%3A00%3A35&limit=40&sort%5C[created_at%5C]=desc&is_data_en=1'
+
+      params = CGI.parse(query_string)
+      params = params.transform_values(&:first) # Convert values from arrays to strings
+
+      importer = DataImporter.new(api_url, params)
       importer.import_data
     end
 

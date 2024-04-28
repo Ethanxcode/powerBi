@@ -7,23 +7,6 @@
     <p class="text-base italic font-light">( Last sync at <%= last_sync_time_for_table("sync_files") %> )</p>
   </div>
 </div>
-<!-- End section header 1 -->
-<!-- Section header 2
-<%= search_form_for @q do |f| %>
-  <%= f.grouping_fields(f.object.new_grouping) do |g| %>
-    <%= g.condition_fields(g.object.new_condition) do |c| %>
-      <%= c.attribute_fields do |a| %>
-        <%= a.attribute_select only: %i(id) %>
-      <% end %>
-      <%= c.predicate_select(only: %i(cont not_eq eq), class: "your-custom-class") %>
-      <%= c.value_fields do |v| %>
-        <%= v.text_field :value %>
-      <% end %>
-    <% end %>
-  <% end %>
-  <%= f.submit "filter" %>
-<% end %>
--->
 <div class="py-[25px]">
   <!-- form section header 2  -->
   <%= search_form_for @q, class: "w-full justify-between py-[25px]", data: { turbo_frame: :result, turbo_action: "advance" } do |f| %>
@@ -41,7 +24,7 @@
               <%= f.label :attribute_select, "Loại tìm kiếm", class: "mb-[10px] text-base font-normal" %>
               <div class="date_sort_select | w-full flex items-center">
                 <%= a.attribute_select(nil, class: "-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50  focus:-outline--border-grey dark:-outline--border-grey rounded-[6px]", include_blank: "Chọn loại tìm kiếm") do |attr| %>
-                  <%= attr.attribute_select(sync_files_table_headers.invert) %>
+                  <%= attr.attribute_select(sync_files_attributes.invert) %>
                 <% end %>
               </div>
             </div>
@@ -97,7 +80,7 @@
           <!-- Table header row -->
           <thead class="text-xs capitalize max-h-[30px] overflow-x-scroll bg-gradient-to-r -from--brand-01  -to--color-orange -text--text-white">
             <tr>
-              <% sync_files_table_headers.each_with_index do |(header, field), index| %>
+              <% sync_files_attributes.each_with_index do |(header, field), index| %>
                 <th class="<%= index == 0 && header.include?("STT") ? "w-[32px]" : "px-[10px]" %> min-w-[170px]  w-full py-[10px] text-balance">
                   <%= header %>
                 </th>
@@ -118,7 +101,7 @@
                 <tr class="<%= "border-b-0" if index == @data.length - 1 %> text-[12px] leading-2 bg-white capitalize dark:bg-gray-800 text-text-base font-normal dark:border-border-grey hover:bg-black-5% text-center dark:hover:bg-black-5%">
                   <!-- Action column -->
                   <td scope="row" class="p-[10px] font-medium whitespace-nowrap ">
-                    <%= link_to(edit_user_path(item.id), class: "flex justify-center items-center") do %>
+                    <%= link_to(edit_user_path(item.id_order_detail), class: "flex justify-center items-center") do %>
                       <span class="-bg--color-orange p-[5px] flex justify-center items-center size-[16px] rounded-[2px]">
                         <%= image_tag("icons/pen-vector.svg", alt: "Edit") %>
                       </span>
@@ -128,8 +111,8 @@
                   <td scope="row" class="font-medium whitespace-nowrap w-[33px] truncate p-[10px]">
                     <%= index + 1 %>
                   </td>
-                  <% sync_files_table_headers.each do |header, field| %>
-                    <% unless field == :index || field == :order_detail_id %>
+                  <% sync_files_attributes.each do |header, field| %>
+                    <% unless field == :index || field == :id_order_detail %>
                       <!-- Data column -->
                       <td class="truncate p-[10px]">
                         <% if item.respond_to?(field) %>

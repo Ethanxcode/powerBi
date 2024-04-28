@@ -5,6 +5,8 @@ require "json"
 # require 'redis'
 require "axlsx"
 require "roo"
+require "uri"
+require "cgi"
 
 # This is the base controller for version 1 of the API.
 class BaseController < ApplicationController
@@ -27,9 +29,9 @@ class BaseController < ApplicationController
       {
         title: "Hệ thống đồng bộ dữ liệu",
         items: [
-          { path: "sync-seasoft", icon: "icons/carbon_cloud-data-ops.svg", name: "Đồng bộ từ Seasoft" },
+          { path: sync_seasofts_path, icon: "icons/carbon_cloud-data-ops.svg", name: "Đồng bộ từ Seasoft" },
           {
-            path: "sync-dms", icon: "icons/material-symbols-light_data-table-outline-sharp.svg",
+            path: sync_dms_path, icon: "icons/material-symbols-light_data-table-outline-sharp.svg",
             name: "Đồng bộ từ DMS"
           },
           { path: sync_files_path, icon: "icons/pepicons-pencil_file.svg", name: "Đồng bộ từ file" }
@@ -40,26 +42,16 @@ class BaseController < ApplicationController
 end
 
 class DataImporter
-  # Initializes a new instance of the DataImporter class.
-  #
-  # @param api_ [String] The API endpoint to import data from.
-  def initialize(api_)
-    @base_url = ENV["BASE_API_URL"]
-    @api_url = "#{@base_url}/#{api_}"
+  def initialize(root_path, params = {})
+    encoded_params = URI.encode_www_form(params)
+    @path = params.empty? ? root_path : "#{root_path}?#{encoded_params}"
+end
 
-    # @redis = Redis.new
-  end
-
-  # Imports data from the API.
-  #
-  # @return [Array] The parsed API response as an array of objects, or nil if the import failed.
   def import_data
     response = fetch_data_from_api
-
     if response&.success?
       parse_api_response(response.body)
     else
-
       Rails.logger.error("Failed to fetch data from API: #{response&.status}")
       nil
     end
@@ -67,22 +59,22 @@ class DataImporter
 
   private
 
-    # Fetches data from the API.
-    #
-    # @return [Faraday::Response, nil] The API response, or nil if the request failed.
     def fetch_data_from_api
-      conn = Faraday.new(url: @api_url)
+      conn = Faraday.new(url: @path)
       begin
-        response = conn.get(@api_url) do |req|
-          req.headers["Content-Type"] = "application/json"
-          req.headers["Accept"] = "application/json"
-          req.headers["connection"] = "keep-alive"
+        response = conn.get(@path) do |req|
+          req.headers["Accept"] = "application/json, text/plain, */*"
+          req.headers["Accept-Language"] = "vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5"
+          req.headers["Cache-Control"] = "no-cache"
+          req.headers["Connection"] = "keep-alive"
+          req.headers["x-api-key"] = "88"
         end
 
         return response if response.success?
 
         Rails.logger.error("Request failed with status code #{response&.status}")
-        nil
+        error = Errors::ErrorsHandler.send(:error_class, response&.status, response)
+        raise error
       rescue Faraday::ConnectionFailed => e
         Rails.logger.error("Connection failed: #{e.message}")
         # render plain: "Connection failed: #{e.message}", status: :service_unavailable
@@ -90,14 +82,13 @@ class DataImporter
       end
     end
 
-    # Parses the API response.
-    #
-    # @param response_body [String] The response body to parse.
-    # @return [Array] The parsed response as an array of objects, or an empty array if parsing failed.
     def parse_api_response(response_body)
-      JSON.parse(response_body)
+      parsed_response = JSON.parse(response_body)
+      parsed_response = { "data" => parsed_response } if parsed_response.is_a?(Array)
+      parsed_response
     rescue JSON::ParserError => e
       Rails.logger.error("Failed to parse API response: #{e.message}")
-      []
+      error_data = Errors::ErrorsHandler.handle_record_invalid(e, response_body)
+      raise error_data
     end
 end

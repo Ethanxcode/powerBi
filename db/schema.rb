@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,9 +10,123 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_29_015654) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_26_041853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ar_internal_metadatas", primary_key: "key", id: :string, force: :cascade do |t|
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "data_center", id: false, force: :cascade do |t|
+    t.float "no"
+    t.float "id_order_detail"
+    t.text "dms_status"
+    t.text "seasoft_status"
+    t.text "order_code"
+    t.text "order_source"
+    t.text "customer_code"
+    t.text "customer_name"
+    t.text "customer_phone"
+    t.text "shipping_address"
+    t.datetime "order_date", precision: nil
+    t.text "product_code"
+    t.text "product_name"
+    t.text "unit_name"
+    t.float "quantity"
+    t.text "is_promotion"
+    t.float "price_before_tax"
+    t.float "price"
+    t.float "%CK/DH"
+    t.float "%CK/SP"
+    t.float "ckdh"
+    t.float "cksp"
+    t.float "tt_tt"
+    t.float "tt_chua_vat_da_tru_ck"
+    t.float "tien_vat"
+    t.float "tt_vat"
+    t.float "tong_tt_truoc_vat"
+    t.float "tong_ck"
+    t.float "tong_tt_chua_vat_da_tru_ck"
+    t.float "tong_tien_vat"
+    t.float "tong_tt_vat"
+    t.text "bill_no"
+    t.text "area_code"
+    t.text "area_name"
+    t.text "region_code"
+    t.text "region_name"
+    t.text "distributor_code"
+    t.text "distributor_name"
+    t.text "rsm_code"
+    t.text "rsm_name"
+    t.text "asm_code"
+    t.text "asm_name"
+    t.text "sup_code"
+    t.text "sup_name"
+    t.text "sale_code"
+    t.text "sale_name"
+    t.text "chanel"
+    t.text "visit"
+    t.text "brand_code"
+    t.text "brand_name"
+  end
+
+  create_table "date_centers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sync_dms", primary_key: "no", id: :float, force: :cascade do |t|
+    t.float "id_order_detail"
+    t.text "dms_status"
+    t.text "order_code"
+    t.text "customer_code"
+    t.text "customer_name"
+    t.text "customer_phone"
+    t.text "shipping_address"
+    t.datetime "order_date", precision: nil
+    t.text "product_code"
+    t.text "product_name"
+    t.text "unit_name"
+    t.float "quantity"
+    t.text "is_promotion"
+    t.float "price_before_tax"
+    t.float "price"
+    t.float "%CK/DH"
+    t.float "%CK/SP"
+    t.float "CKDH"
+    t.float "CKSP"
+    t.float "tt_tt"
+    t.float "tt_chua_vat_da_tru_ck"
+    t.float "tien_vat"
+    t.float "tt_vat"
+    t.float "tong_tt_truoc_vat"
+    t.float "tong_ck"
+    t.float "tong_tt_chua_vat_da_tru_ck"
+    t.float "tong_tien_vat"
+    t.float "tong_tt_vat"
+    t.text "bill_no"
+    t.text "area_code"
+    t.text "area_name"
+    t.text "region_code"
+    t.text "region_name"
+    t.text "distributor_code"
+    t.text "distributor_name"
+    t.text "rsm_code"
+    t.text "rsm_name"
+    t.text "asm_code"
+    t.text "asm_name"
+    t.text "sup_code"
+    t.text "sup_name"
+    t.text "sale_code"
+    t.text "sale_name"
+    t.text "chanel"
+    t.text "visit"
+    t.text "brand_code"
+    t.text "brand_name"
+  end
 
   create_table "sync_files", force: :cascade do |t|
     t.bigint "order_detail_id"
@@ -68,6 +180,58 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_29_015654) do
     t.string "brand_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sync_seasofts", id: false, force: :cascade do |t|
+    t.float "id_order_detail"
+    t.float "no"
+    t.text "seasoft_status"
+    t.text "order_code"
+    t.text "customer_code"
+    t.text "customer_name"
+    t.text "customer_phone"
+    t.text "shipping_address"
+    t.datetime "order_date", precision: nil
+    t.text "product_code"
+    t.text "product_name"
+    t.text "unit_name"
+    t.float "quantity"
+    t.text "is_promotion"
+    t.float "price_before_tax"
+    t.float "price"
+    t.float "%CK/DH"
+    t.float "%CK/SP"
+    t.float "ckdh"
+    t.float "cksp"
+    t.float "tt_tt"
+    t.float "tt_chua_vat_da_tru_ck"
+    t.float "tien_vat"
+    t.float "tt_vat"
+    t.float "tong_tt_truoc_vat"
+    t.float "tong_ck"
+    t.float "tong_tt_chua_vat_da_tru_ck"
+    t.float "tong_tien_vat"
+    t.float "tong_tt_vat"
+    t.text "bill_no"
+    t.text "area_code"
+    t.text "area_name"
+    t.text "region_code"
+    t.text "region_name"
+    t.text "distributor_code"
+    t.text "distributor_name"
+    t.text "rsm_code"
+    t.text "rsm_name"
+    t.text "asm_code"
+    t.text "asm_name"
+    t.text "sup_code"
+    t.text "sup_name"
+    t.text "sale_code"
+    t.text "sale_name"
+    t.text "chanel"
+    t.text "visit"
+    t.text "brand_code"
+    t.text "brand_name"
+    t.index ["id_order_detail"], name: "idx_data_seasoft_lookup"
   end
 
   create_table "sync_times_records", force: :cascade do |t|

@@ -3,7 +3,7 @@
   # Controller responsible for managing the warehouse functionality.
   class SyncFilesController < BaseController
     include SyncFilesHelper
-    before_action :set_sync_files_data, only: [:index, :export]
+    before_action :setup, only: [:index, :export]
 
     def index
     end
@@ -50,9 +50,8 @@
 
     private
 
-      # Sets the data centers for the index and export actions.
-      def set_sync_files_data
+      def setup
         @q = SyncFile.ransack(params[:query])
-        @pagy, @data = pagy(@q.result(distinct: true).all, items: params[:per_page] || 10)
-      end
+        @pagy, @data = pagy(@q.result(distinct: "id").all, items: params[:per_page] || 10)
+       end
   end

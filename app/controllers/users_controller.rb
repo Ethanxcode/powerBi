@@ -5,10 +5,12 @@
   class UsersController < BaseController
     include UsersHelper
 
-    before_action :set_user, only: [:index, :export]
+    before_action :index, :export, only: [:index, :export]
 
     # Retrieves data for the index page.
     def index
+      @q = User.ransack(params[:query])
+      @pagy, @data = pagy(@q.result.all, items: params[:per_page] || 10)
 
       # Generate a random date within a specific range.
       start_date = DateTime.parse("2020-01-01")
@@ -51,11 +53,7 @@
       end
     end
 
-    # Sets the data centers for the index and export actions.
-    def set_user
-      @q = User.ransack(params[:query])
-      @pagy, @users = pagy(@q.result(distinct: true).all, items: params[:per_page] || 10)
-    end
+
 
     # Retrieves data for the edit page.
     def edit
@@ -152,7 +150,7 @@
       # Prepares data for retrieval from the host API.
       def prepare_get_data_from_host
         api_path = "v0/datawarehouse/get-list-user-export"
-        importer = DataImporter.new(api_path)
+        # importer = DataImporter.new(api_path)
         importer.import_data
       end
   end

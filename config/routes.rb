@@ -17,6 +17,8 @@ Rails.application.routes.draw do
       end
     end
 
+
+
     resources :users, only: [:index, :edit, :show, :export] do
       collection do
         get :export
@@ -31,7 +33,7 @@ Rails.application.routes.draw do
         post :import_from_files
       end
     end
-
+  
     resources :sync_seasofts, only: [:index, :edit, :show, :export], path: 'seasoft' do
       collection do
         get :export

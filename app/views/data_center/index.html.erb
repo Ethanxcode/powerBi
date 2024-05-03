@@ -10,25 +10,16 @@ The user can also download the data centers in Excel format.
 <%
 =end
 %>
-<% daithuan_title "Trung Tâm Dữ Liệu" %>
+<%= daithuan_title t('models.data_center') %>
 <div class="pt-[25px]">
   <div class="flex justify-between gap-[25px] items-center flex-nowrap mb-[25px]">
-    <h2 class=" text-2xl font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r -from--brand-01 -to--color-orange  ">Trung tâm dữ liệu </h2>
+    <h2 class=" text-2xl font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r -from--brand-01 -to--color-orange  "><%= t('models.data_center')%> </h2>
+
     <div class="flex justify-between gap-[25px] items-center">
-      <%
-=begin%>
-      <p class="text-base italic font-light"> (Last sync at 12:00:00 pm - 01/12/2023)</p>
-      <%
-=end%>
-      <p class="text-base italic font-light">( Last sync at <%= last_sync_time_for_table("users") %> )</p>
-      <%
-=begin%>
-      <%= render partial: "common/button", locals: { color: "-bg--color-green-4", icon: "icons/radix-icons_update.svg", text: "Synchronized" } %>
-      <%
-=end%>
-      <%= button_to import_users_path, method: :post, class: "flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-green-4" do %>
+  <p class="text-base italic font-light">( <%= t("defaults.last_sync") %> <%= last_sync_time_for_table("data_center") %> )</p>
+      <%= button_to import_data_center_index_path, method: :post, class: "flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-green-4" do %>
         <%= image_tag("icons/radix-icons_update.svg") %>
-        <span class="text-base font-bold -text--text-white">Synchronized</span>
+        <span class="text-base font-bold -text--text-white"><%= t("defaults.Synchronized") %></span>
       <% end %>
       <div data-controller="common">
         <div class="hidden" >
@@ -39,53 +30,142 @@ The user can also download the data centers in Excel format.
         </div>
         <label  id="file-label" class="flex justify-center text-white items-center gap-[10px] py-[15px] max-w-[150px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-blue hover:-bg--color-blue" for="file-input">
           <%= image_tag("icons/uploadFileSvg") %>
-          <span class="text-base font-bold -text--text-white truncate" >Upload file</span>
+          <span class="text-base font-bold -text--text-white truncate" ><%= t("defaults.upload") %></span>
         </label>
       </div>
     </div>
   </div>
 </div>
+
 <div class="py-[25px]">
-  <div class="w-full justify-between py-[25px]">
-    <%= render partial: "common/picker", locals: { fromDate: "Từ ngày", toDate: "Đến ngày", selectTitle: "Loại tìm kiếm", options: @itemsPerpage }%>
+  <!-- form section header 2  -->
+   <%= search_form_for @q, url: data_center_index_path, class: "w-full justify-between py-[25px]", data: { turbo_frame: :result, turbo_action: "advance" } do |f| %>
+    <%= f.grouping_fields(f.object.new_grouping) do |g| %>
+      <div class="flex items-end gap-[25px] w-full">
+        <%= g.condition_fields(g.object.new_condition) do |c| %>
+          <%= c.value_fields do |v| %>
+            <div class="flex flex-col w-full">
+            <%= f.label :text_field, t('defaults.search_label'), class: "mb-[10px] text-base font-normal" %>
+        <%= v.text_field(:value, class: "-bg--bg-base hover:-bg--black-5% -text--text-base placeholder:-text--text-placeholder block w-full py-[24px] px-[12px] text-gray-900 border-none  focus:-outline--border-grey dark:-outline--border-grey hover:-bg--black-5 rounded-[6px]", placeholder: t('defaults.search_placeholder')) %>
+            </div>
+          <% end %>
+          <%= c.attribute_fields do |a| %>
+        <div class="flex flex-col">
+        <%= f.label :attribute_select, t("defaults.search_type"), class: "mb-[10px] text-base font-normal" %>
+          <div class="date_sort_select | w-full flex items-center">
+        <%= a.attribute_select({ include_blank: t("defaults.search_type") }, class: "-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50  focus:-outline--border-grey dark:-outline--border-grey rounded-[6px]") %>
+      </div>
+      </div>
+          <% end %>
+          <div class="flex flex-col">
+            <%= f.label :predicate_select,  t("defaults.method"), class: "mb-[10px] text-base font-normal" %>
+            <%= c.predicate_select({ only: %i(cont not_eq eq) }, { class: "-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50  focus:-outline--border-grey dark:-outline--border-grey rounded-[6px]" }) %>
+          </div>
+          <div class="flex flex-col">
+            <%= f.label :order_date_gteq, t("defaults.from"), class: "mb-[10px] text-base font-normal" %>
+            <%= f.date_field :order_date_gteq, class: "-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50  focus:-outline--border-grey dark:focus:-outline--border-grey rounded-[6px]" %>
+          </div>
+          <div class="flex flex-col">
+            <%= f.label :order_date_lteq, t("defaults.to"), class: "mb-[10px] text-base font-normal" %>
+            <%= f.date_field :order_date_lteq, class: "-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50  focus:-outline--border-grey dark:focus:-outline--border-grey rounded-[6px]" %>
+          </div>
+        <% end %>
+      <% end %>
+      <%= f.submit t("defaults.search_label"), class: "bg-gradient-to-r -from--brand-01 -to--color-orange flex text-base font-bold justify-center -text--text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md cursor-pointer " %>
+    <% end %>
+    <!-- End section header 2  -->
   </div>
 </div>
-<%
-=begin
+
+<div>
+  <!-- Table container -->
+  <div class="shadow-md md:p-[15px] xxl:p-[25px] rounded-[12px] h-full  md:max-h-[1237px]">
+    <!-- Table header -->
+    <div class="-text--text-base text-sm flex justify-between items-center mb-[20px] ">
+      <div class="date_sort_select | w-full flex items-center">
+
+
+        <%= select_tag 'location_selector', 
+               content_tag(:option, 'Hiển thị', selected: true, disabled: true) +
+               options_from_collection_for_select(PAGE_SIZES, :itself, :itself, params[:per_page]), 
+               { 
+                 data: { controller: "common", action: "change->common#goToLocation" },
+                 style: "--tw-ring-offset-shadow: none; --tw-ring-shadow: none;",
+                 class: "inline-flex max-w-[130px] cursor-pointer items-center py-[5px] 
+                         rounded-[4px]
+                         -bg--bg-base border -text--text-base  -border--border-01 
+                         hover:-bg--black-5% dark:hover:-bg--black-5%
+                         font-medium text-sm focus:-border--border-01 dark:-border--black-40% dark:hover:-border--black-40%"
+               } 
 %>
-<%= render partial: "common/table",
-      locals:
-          {
-          items_per_page: 10,
-          pagination: true,
-          color: "bg-gradient-to-r -from--brand-01  -to--color-orange",
-          tableHeader: user_table_headers,
-          data: @data_centers,
-          route: "data_center"
-          } %>
-<%
-=end
-%>
-<%= render partial: "common/table",
-      locals: {
-          items_per_page: 10,
-          pagination: true,
-          color: "bg-gradient-to-r -from--brand-01 -to--color-orange",
-          tableHeader: user_table_headers,
-          data: @user_management,
-          route: "user"
-      } %>
-<%
-=begin
-%>
-<% if @result %>
-  <h2>Data from Omni Service</h2>
-  <pre><%= JSON.pretty_generate(@result, @message) %></pre>
-<% else %>
-  <p>No data available</p>
-<% end %>
-<%= link_to "Download Data Centers", export_data_center_index_path(format: :xlsx), class: "btn btn-primary" %>
-<%
-=end
-%>
+      </div>
+      <%= render partial: "common/button", locals: { color: "bg-gradient-to-r -from--brand-01 -to--color-orange", icon: "icons/mdi_filter.svg", text: t('defaults.filter') } %>
+    </div>
+    <!-- Table body -->
+    <%= turbo_frame_tag :result, data: { turbo_action: "advance" } do %>
+      <div class="h-full overflow-x-scroll  ">
+        <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400 ">
+          <!-- Table header row -->
+          <thead class="text-xs capitalize max-h-[30px] overflow-x-scroll bg-gradient-to-r -from--brand-01  -to--color-orange -text--text-white">
+        <tr>
+            <% DataCenter.column_names.each_with_index do |field, index| %>
+              <th class="<%= index == 1 ? "w-[32px]" : "px-[10px] min-w-[170px]" %> w-full py-[10px] text-balance">
+            <%= index == 1 ? 'STT' : t("attributes.#{field}") %>
+              </th>
+            <% end %>
+          </tr>
+          </thead>
+          <tbody>
+            <% if @data.blank? || @data.nil? %>
+              <!-- No @data row -->
+              <tr>
+                <td colspan="100%" style="text-wrap: nowrap; padding: 24px;" class="w-full text-center text-2xl font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r from-brand-01 to-color-orange">
+                  <%= t("defaults.noData") %>
+                </td>
+              </tr>
+          <% else %>
+            <% @data.each_with_index do |item, index| %>
+              <!-- Data row -->
+              <tr class="<%= "border-b-0" if index == @data.length - 1 %> text-[12px] leading-2 bg-white capitalize dark:bg-gray-800 text-text-base font-normal dark:border-border-grey hover:bg-black-5% text-center dark:hover:bg-black-5%">
+                <!-- Action column -->
+                <td scope="row" class="p-[10px] font-medium whitespace-nowrap ">
+                  <%= link_to(edit_data_center_path(item.id), class: "flex justify-center items-center") do %>
+                    <span class="-bg--color-orange p-[5px] flex justify-center items-center size-[16px] rounded-[2px]">
+                      <%= image_tag("icons/pen-vector.svg", alt: "Edit") %>
+                    </span>
+                  <% end %>
+                </td>
+                <!-- Index column -->
+                <td scope="row" class="font-medium whitespace-nowrap w-[33px] truncate p-[10px]">
+                  <%= index + 1 %>
+                </td>
+              <% DataCenter.column_names.each_with_index do |field, field_index| %>
+              <% next if field_index <= 1 %>
+                <td class="truncate p-[10px]">
+                  <%= item.public_send(field).presence || t("defaults.not_available") %>
+                </td>
+              <% end %>
+              </tr>
+            <% end %>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+    <% unless @data.blank? %>
+      <!-- Pagination section -->
+      <div class="mt-[20px]">
+        <div class="py-[5px] flex justify-between items-center">
+          <!-- Export button -->
+          <%= link_to(send("export_data_center_index_path", format: :xlsx), class: "flex justify-center items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--brand-01 rounded-[6px] hover:-bg--brand-02 rounded-[6px]") do %>
+            <%= image_tag("icons/uil-file-export.svg") %>
+            <span class="text-base font-bold -text--text-white"> <%= t("defaults.exportData") %></span>
+          <% end %>
+          <!-- Pagination navigation -->
+          <%== pagy_nav(@pagy) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
+

@@ -2,8 +2,8 @@
 
   # Controller responsible for managing the warehouse functionality.
   class SyncDmsController < BaseController
-    include SyncFilesHelper
-    before_action :set_sync_files_data, only: [:index, :export]
+    include SyncDmsHelper
+    before_action :setup, only: [:index, :export]
 
     def index
     end
@@ -18,10 +18,9 @@
           alignment: { horizontal: :center })
 
         wb.add_worksheet(name: "Đồng bộ từ file") do |sheet|
-          sheet.add_row sync_files_table_headers.keys.map(&:titleize), style: title_style
-
+          sheet.add_row sync_dms_attributes.keys.map(&:titleize), style: title_style
           @data.each_with_index do |item, index|
-            sync_files_table_headers.values.map do |field|
+            sync_dms_attributes.values.map do |field|
               value = nil
               if field == :index
                 value = index + 1
@@ -50,9 +49,8 @@
 
     private
 
-      # Sets the data centers for the index and export actions.
-      def set_sync_files_data
-        @q = SyncFile.ransack(params[:query])
-        @pagy, @data = pagy(@q.result(distinct: true).all, items: params[:per_page] || 10)
+      def setup
+        @q = SyncDms.ransack(params[:query])
+        @pagy, @data = pagy(@q.result.all, items: params[:per_page] || 10)
       end
   end

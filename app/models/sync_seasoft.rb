@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 # rubocop:disable all
 
-class SyncDms < ApplicationRecord
-  include SyncDmsHelper
+class SyncSeasoft < ApplicationRecord
+  include SyncSeasoftHelper
   attr_accessor :search_field
 
   def self.ransackable_attributes(auth_object = nil)
     %w[
       id_order_detail
-      dms_status
+      seasoft_status
       order_code
       customer_code
       customer_name
@@ -64,18 +64,18 @@ class SyncDms < ApplicationRecord
   end
 
   # Clear the connection cache
-  SyncDms.connection.clear_cache!
+  SyncSeasoft.connection.clear_cache!
 
   def self.insert_from_api(agrs)
     errors = []
 
-    SyncDms.transaction do
-      agrs["data"].each do |data|
+    SyncSeasoft.transaction do
+      agrs["data"].each do |user_data|
         begin
           # Tạo một hash để lưu trữ các trường có giá trị để cập nhật hoặc tạo người dùng
           attributes_to_update = {}
 
-          data.each do |key, value|
+          user_data.each do |key, value|
             if value.present? && User.column_names.include?(key)
               attributes_to_update[key] = value
             end
@@ -83,11 +83,11 @@ class SyncDms < ApplicationRecord
 
           next if attributes_to_update.empty?
 
-          data = SyncDms.find_or_initialize_by(id: data['id'])
+          user = User.find_or_initialize_by(id: user_data['id'])
 
-          data.attributes = attributes_to_update
-          if data.save!
-            Rails.logger.info "User updated successfully with ID: #{data['id']}"
+          user.attributes = attributes_to_update
+          if user.save!
+            Rails.logger.info "User updated successfully with ID: #{user_data['id']}"
           else
             Rails.logger.error "Failed to update user: #{user.errors.full_messages.join(", ")}"
             errors << { id: user.id, errors: user.errors.full_messages }

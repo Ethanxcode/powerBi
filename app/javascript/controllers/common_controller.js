@@ -11,4 +11,12 @@ export default class CommonController extends Controller {
       })
     }
   }
+
+  goToLocation(event) {
+    const url = new URL(window.location);
+    url.searchParams.set('per_page', event.target.value);
+    window.location.href = url;
+  }
+
+
 }

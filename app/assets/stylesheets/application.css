@@ -44,3 +44,7 @@ select:focus,
 textarea:focus {
   --tw-ring-color: initial !important;
 }
+
+a, button, input, label, select {
+  cursor: pointer;
+}

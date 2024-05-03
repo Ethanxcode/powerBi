@@ -6,7 +6,7 @@ class SyncFile < ApplicationRecord
 
   def self.ransackable_attributes(auth_object = nil)
     %w[
-      order_detail_id
+      id_order_detail
       dms_status
       seasoft_status
       order_source

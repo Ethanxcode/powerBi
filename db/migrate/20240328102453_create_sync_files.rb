@@ -3,7 +3,7 @@
 class CreateSyncFiles < ActiveRecord::Migration[7.1]
   def change
     create_table :sync_files do |t|
-      t.bigint :order_detail_id
+      t.bigint :id_order_detail
       t.string :dms_status
       t.string :seasoft_status
       t.string :order_source

@@ -4,7 +4,7 @@
 	module UsersHelper
 		include BaseHelper
 
-	def users_table_headers
+	def users_attributes
 		[
 			'Thao tác', 'STT', 'Tài khoản', 'SDT', 'Email',' Họ tên', 'Quyền hạn', 'Trạng thái', 'Ngày tạo', 'Ngày cập nhật'
 		]

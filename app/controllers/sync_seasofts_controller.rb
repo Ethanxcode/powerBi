@@ -1,8 +1,8 @@
   # frozen_string_literal: true
 
   # Controller responsible for managing the warehouse functionality.
-  class SyncFilesController < BaseController
-    include SyncFilesHelper
+  class SyncSeasoftsController < BaseController
+    include SyncSeasoftHelper
     before_action :setup, only: [:index, :export]
 
     def index
@@ -18,8 +18,7 @@
           alignment: { horizontal: :center })
 
         wb.add_worksheet(name: "Đồng bộ từ file") do |sheet|
-          sheet.add_row sync_files_table_headers.keys.map(&:titleize), style: title_style
-
+          sheet.add_row sync_dms_attributes.keys.map(&:titleize), style: title_style
           @data.each_with_index do |item, index|
             sync_files_table_headers.values.map do |field|
               value = nil
@@ -40,7 +39,7 @@
     end
 
     def edit
-      @data_center = User.find(params[:id])
+      @detail = SyncSeasoft.find(params[:id])
     end
 
     # Retrieves data for the show page.
@@ -51,7 +50,7 @@
     private
 
       def setup
-        @q = SyncFile.ransack(params[:query])
-        @pagy, @data = pagy(@q.result(distinct: "id").all, items: params[:per_page] || 10)
-       end
+        @q = SyncSeasoft.ransack(params[:query])
+        @pagy, @data = pagy(@q.result.all, items: params[:per_page] || 10)
+      end
   end

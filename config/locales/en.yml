@@ -27,5 +27,104 @@
 #       "yes": yup
 #       enabled: "ON"
 
+
 en:
-  hello: "Hello world"
+  models:
+    users: Passenger
+    data_center: Data Center
+    sync_dms: Sync DMS
+    sync_seasoft: Sync SEASOFT
+    sync_files: Sync Files
+    users: Users management
+  ransack:
+    asc: ascending
+    desc: descending
+    predicates:
+      cont: contains
+      cont_all: contains all
+      cont_any: contains any
+      not_cont: not contains
+      start: starts with
+      end: ends with
+      gt: greater than
+      lt: less than
+      not_eq: not equal with
+      eq: equal with
+      not_eq_all: not equal with all
+      not_eq_any: not equal with any
+  attributes:
+    id_order_detail: "Order Detail ID"
+    index: "Index"
+    dms_status: "DMS Status"
+    seasoft_status: "SEASOFT Status"
+    order_status: "Order Status"
+    order_source: "Order Source"
+    order_code: "Order Code"
+    customer_code: "Customer Code"
+    customer_name: "Customer Name"
+    customer_phone: "Customer Phone"
+    shipping_address: "Shipping Address"
+    order_date: "Order Date"
+    product_code: "Product Code"
+    product_name: "Product Name"
+    unit_name: "Unit Name"
+    quantity: "Quantity"
+    is_promotion: "Promotion"
+    price_before_tax: "Price Before Tax"
+    price: "Price"
+    "%CK/DH": "% Discount/Order"
+    "%CK/SP": "% Discount/Product"
+    ckdh: "Discount/Order"
+    cksp": "Discount/Product"
+    tt_tt: "Total Amount"
+    tt_chua_vat_da_tru_ck: "Total Amount (excluding VAT, after discount)"
+    tien_vat: "VAT Amount"
+    tt_vat: "Total Amount (including VAT)"
+    tong_tt_truoc_vat: "Total Amount (excluding VAT)"
+    tong_ck: "Total Discount"
+    tong_tt_chua_vat_da_tru_ck: "Total Amount (excluding VAT, after discount)"
+    tong_tien_vat: "Total VAT Amount"
+    tong_tt_vat: "Total Amount (including VAT)"
+    bill_no: "Bill Number"
+    area_code: "Area Code"
+    area_name: "Area Name"
+    region_code: "Region Code"
+    region_name: "Region Name"
+    distributor_code: "Distributor Code"
+    distributor_name: "Distributor Name"
+    rsm_code: "RSM Code"
+    rsm_name: "RSM Name"
+    asm_code: "ASM Code"
+    asm_name: "ASM Name"
+    sup_code: "SUP Code"
+    sup_name: "SUP Name"
+    sale_code: "SALE Code"
+    sale_name: "SALE Name"
+    channel: "Channel"
+    visit: "Visit"
+    brand_code: "Brand Code"
+    brand_name: "Brand Name"
+    created_at: "Created At"
+    updated_at: "Updated At"
+  person:
+    name: Full Name
+  article:
+    title: Article Title
+    body: Main Content
+
+  defaults:
+    not_available: "N/A"
+    search_label: "Search"
+    search_placeholder: "Please enter..."
+    search_type: "Select Type"
+    method: "Method"
+    last_sync: "Last Sync at"
+    from: "From"
+    to: "To"
+    Synchronized: "Synchronized"
+    upload: "Upload file"
+    noData: "No data"
+    exportData: "Export data"
+    importData: "Import data"
+    filter: "Filter"
+

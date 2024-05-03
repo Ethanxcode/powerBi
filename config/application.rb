@@ -12,6 +12,7 @@ module Datawarehouse
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
+    config.i18n.default_locale = :vi
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do

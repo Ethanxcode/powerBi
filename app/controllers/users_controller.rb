@@ -5,7 +5,7 @@
   class UsersController < BaseController
     include UsersHelper
 
-    before_action :set_user, only: [:index, :export]
+    before_action :setup, only: [:index, :export]
 
     # Retrieves data for the index page.
     def index
@@ -51,20 +51,16 @@
       end
     end
 
-    # Sets the data centers for the index and export actions.
-    def set_user
-      @q = User.ransack(params[:query])
-      @pagy, @users = pagy(@q.result(distinct: true).all, items: params[:per_page] || 10)
-    end
+
 
     # Retrieves data for the edit page.
     def edit
-      @users = User.find(params[:id])
+      @data = User.find(params[:id])
     end
 
     # Retrieves data for the show page.
     def show
-      @users = User.find(params[:id])
+      @data = User.find(params[:id])
     end
 
     def import
@@ -114,9 +110,9 @@
         date_cell = style.add_style(format_code: "yyyy-mm-dd", border: Axlsx::STYLE_THIN_BORDER)
         highlight_cell = wb.styles.add_style(bg_color: "FF0000", type: :dxf)
 
-        wb.add_worksheet(name: "Danh sách khách hàng") do |sheet|
-          sheet.add_row users_table_headers.map(&:titleize), style: title_style
-          @users.each_with_index do |user, index|
+        wb.add_worksheet(name: "Danh sách") do |sheet|
+          sheet.add_row users_attributes.map(&:titleize), style: title_style
+          @data.each_with_index do |user, index|
             sheet.add_row [
                 user.id, index + 1, user.account, user.phone_number,
                 user.email, user.full_name, user.permission, user.status ? "Hoạt động" : "Không hoạt động",
@@ -136,12 +132,17 @@
 
     private
 
+    def setup
+      @q = User.ransack(params[:query])
+      @pagy, @data = pagy(@q.result.all, items: params[:per_page] || 10)
+    end
+
       def update
-        @pagy, @users = pagy(User.all)
-        respond_to do |format|
-          format.turbo_stream
-          format.html { redirect_to user_path }
-        end
+        # @pagy, @data = pagy(User.all)
+        # respond_to do |format|
+        #   format.turbo_stream
+        #   format.html { redirect_to user_path }
+        # end
       end
 
       # Inserts data from API if @result is present.
@@ -152,7 +153,7 @@
       # Prepares data for retrieval from the host API.
       def prepare_get_data_from_host
         api_path = "v0/datawarehouse/get-list-user-export"
-        importer = DataImporter.new(api_path)
+        # importer = DataImporter.new(api_path)
         importer.import_data
       end
   end

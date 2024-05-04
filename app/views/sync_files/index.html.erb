@@ -24,7 +24,7 @@
               <%= f.label :attribute_select, "Loại tìm kiếm", class: "mb-[10px] text-base font-normal" %>
               <div class="date_sort_select | w-full flex items-center">
                 <%= a.attribute_select(nil, class: "-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50  focus:-outline--border-grey dark:-outline--border-grey rounded-[6px]", include_blank: "Chọn loại tìm kiếm") do |attr| %>
-                  <%= attr.attribute_select(sync_files_attributes.invert) %>
+                  <%= attr.attribute_select(SyncFile.column_names.invert) %>
                 <% end %>
               </div>
             </div>
@@ -80,11 +80,11 @@
           <!-- Table header row -->
           <thead class="text-xs capitalize max-h-[30px] overflow-x-scroll bg-gradient-to-r -from--brand-01  -to--color-orange -text--text-white">
             <tr>
-              <% sync_files_attributes.each_with_index do |(header, field), index| %>
-                <th class="<%= index == 0 && header.include?("STT") ? "w-[32px]" : "px-[10px]" %> min-w-[170px]  w-full py-[10px] text-balance">
-                  <%= header %>
-                </th>
-              <% end %>
+              <% SyncFile.column_names.each_with_index do |field, index|  %>
+            <th class="<%= index == 1 ? "w-[32px]" : "px-[10px] min-w-[170px]" %> w-full py-[10px] text-balance">
+            <%= index == 1 ? 'STT' : t("attributes.#{field}") %>
+              </th>
+            <% end %>
             </tr>
           </thead>
           <tbody>
@@ -111,7 +111,7 @@
                   <td scope="row" class="font-medium whitespace-nowrap w-[33px] truncate p-[10px]">
                     <%= index + 1 %>
                   </td>
-                  <% sync_files_attributes.each do |header, field| %>
+                  <% SyncFile.column_names.each do |header, field| %>
                     <% unless field == :index || field == :id_order_detail %>
                       <!-- Data column -->
                       <td class="truncate p-[10px]">

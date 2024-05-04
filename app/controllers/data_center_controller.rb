@@ -21,56 +21,35 @@
     end
 
     def import_from_files
-      flash[:notice] = 'Just testing, dude'
-
       uploaded_file = params[:file]
       ip_address = request.remote_ip
       if uploaded_file
         ActiveRecord::Base.transaction do
           Rails.logger.info "Data retrieval successful. Inserting data from file..."
-          SyncFile.import_from_file(uploaded_file)
-
-          Rails.logger.info "Log"
-
-          SyncTimesRecord.update_sync_time('sync_files', ip_address)
-          Rails.logger.info "Data insertion complete."
-          # Tạm thời bỏi vì chưa có giao diện thành công hay lỗi
-          head :no_content
-      rescue => e
-        Rails.logger.error "An error occurred: #{e.message}"
-        Rails.logger.error "Rolling back transaction..."
-        puts "Opp! Has errors when transaction"
-        raise ActiveRecord::Rollback
-        Rails.logger.error "Transaction rolled back successfully."
-        # Phản hồi lỗi nếu cần thiết
-        head :unprocessable_entity
+          importer = DataImporter.new
+          error_file = importer.import_from_file(uploaded_file)      
+          if error_file
+            send_file error_file, filename: "Error-#{Time.zone.now.strftime('%d-%m-%Y')}.xlsx", type: "application/xlsx"
+          else
+            flash[:notice] = "Imported data from file successfully."
+            SyncTimesRecord.update_sync_time('sync_files', ip_address, 'success', 'Imported data from file')
+          end
+          
+        rescue => e
+          error_message = e.message.is_a?(Array) ? e.message.join(', ') : e.message
+          Rails.logger.error "An error occurred: #{error_message}"
+          raise ActiveRecord::Rollback
+        
+          SyncTimesRecord.update_sync_time('sync_files', ip_address, 'failure', "An error occurred: #{error_message}")
+          head :flash[:notice] = "Imported data from file successfully."
+        end
+      else
+        Rails.logger.error "Failed to retrieve data from the host API."
+        # Chỉ định phản hồi
+        head :flash[:notice] = "Imported data from file successfully."
       end
-    else
-      Rails.logger.error "Failed to retrieve data from the host API."
-      # Chỉ định phản hồi
-      head :unprocessable_entity
-    end
-  rescue NoMethodError
-    puts "Opp! Has errors"
-      # spreadsheet = Roo::Spreadsheet.open(uploaded_file.path)
-
-      # @data = []
-
-      # spreadsheet.sheets.each do |sheet_name|
-      #   sheet = spreadsheet.sheet(sheet_name)
-
-      #   # Get the headers from the first row
-      #   headers = sheet.row(1)
-
-      #   # Get the data from the remaining rows
-      #   sheet_data = (2..sheet.last_row).map do |i|
-      #     row = Hash[[headers, sheet.row(i)].transpose]
-      #     row
-      #   end
-
-      #   @data += sheet_data
-      # end
-      # render 'import'
+    rescue NoMethodError
+      puts "Opp! Has errors"
     end
 
 
@@ -100,6 +79,7 @@
     rescue => e
       Rails.logger.error "An error occurred: #{e.message}"
       Rails.logger.error "Rolling back transaction..."
+      SyncTimesRecord.update_sync_time('data_center', ip_address, 'failure', e.message)
       # flash[:alert] = "An error occurred: #{e.message}"
       head :unprocessable_entity
     end
@@ -153,7 +133,6 @@
                 value = index + 1
               elsif item.respond_to?(field)
                 value = item.send(field)
-                value = value.strftime("%Y-%m-%d") if value.is_a?(Time)
               end
               value
             end

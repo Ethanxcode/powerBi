@@ -19,8 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :environment, "development"
-set :output, "log/cron.log"
+# set :environment, "development"
+# set :output, "log/cron.log"
 
 job_type :runner,  "cd :path && /home/ethan/.rbenv/shims/bundle exec rails runner -e :environment ':task' :output"
 

@@ -18,10 +18,10 @@
           alignment: { horizontal: :center })
 
         wb.add_worksheet(name: "Đồng bộ từ file") do |sheet|
-          sheet.add_row sync_files_table_headers.keys.map(&:titleize), style: title_style
+          sheet.add_row SyncFile.column_names.map(&:titleize), style: title_style
 
           @data.each_with_index do |item, index|
-            sync_files_table_headers.values.map do |field|
+            SyncFile.column_names.map do |field|
               value = nil
               if field == :index
                 value = index + 1
@@ -52,6 +52,6 @@
 
       def setup
         @q = SyncFile.ransack(params[:query])
-        @pagy, @data = pagy(@q.result(distinct: "id").all, items: params[:per_page] || 10)
+        @pagy, @data = pagy(@q.result.all, items: params[:per_page] || 10)
        end
   end

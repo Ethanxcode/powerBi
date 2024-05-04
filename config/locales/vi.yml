@@ -99,3 +99,21 @@ vi:
     exportData: "Xuất dữ liệu"
     importData: "Nhập dữ liệu"
     filter: "Lọc"
+  activerecord:
+    errors:
+      models:
+        sync_file:
+          attributes:
+            order_date:
+              blank: "Ngày đặt hàng không được để trống"
+          blank: "Tệp đồng bộ không được để trống"
+      messages:
+        blank: "Không được để trống"
+  errors:
+    attributes:
+      order_date:
+        blank: "Ngày đặt hàng không được để trống"
+    messages:
+      blank: "Không được để trống"
+      invalid_date: "Ngày bán hàng phải là một ngày hợp lệ"
+      not_a_number: "Điện thoại phải là một số"

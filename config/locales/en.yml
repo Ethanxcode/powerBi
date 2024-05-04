@@ -127,4 +127,21 @@ en:
     exportData: "Export data"
     importData: "Import data"
     filter: "Filter"
-
+  activerecord:
+      errors:
+        models:
+          sync_file:
+            attributes:
+              order_date:
+                blank: "Order date cannot be blank"
+            blank: "Sync file cannot be blank"
+        messages:
+          blank: "Cannot be blank"
+  errors:
+      attributes:
+        order_date:
+          blank: "Order date cannot be blank"
+      messages:
+        blank: "Cannot be blank"
+        invalid_date: "Sale date must be a valid date"
+        not_a_number: "Phone must be a number"

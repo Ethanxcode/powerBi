@@ -24,8 +24,8 @@ The user can also download the data centers in Excel format.
       <div data-controller="common">
         <div class="hidden" >
           <%= form_with(url: import_from_files_data_center_index_path, method: :post, local: true, multipart: true) do |form| %>
-            <%= form.file_field :file, id: "file-input" %>
-            <%= form.submit "Import" %>
+        <%= form.file_field :file, id: "file-input", onchange: 'this.form.submit()' %>
+        <%= form.submit "Import" %>
           <% end %>
         </div>
         <label  id="file-label" class="flex justify-center text-white items-center gap-[10px] py-[15px] max-w-[150px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-blue hover:-bg--color-blue" for="file-input">
@@ -79,7 +79,7 @@ The user can also download the data centers in Excel format.
 
 <div>
   <!-- Table container -->
-  <div class="shadow-md md:p-[15px] xxl:p-[25px] rounded-[12px] h-full  md:max-h-[1237px]">
+  <div class="shadow-md md:p-[15px] xxl:p-[25px] rounded-[12px] h-full  ">
     <!-- Table header -->
     <div class="-text--text-base text-sm flex justify-between items-center mb-[20px] ">
       <div class="date_sort_select | w-full flex items-center">

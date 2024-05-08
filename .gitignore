@@ -48,3 +48,9 @@ yarn.lock
 
 # Ignore Gemfile lock.
 Gemfile.lock
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

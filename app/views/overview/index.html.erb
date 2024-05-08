@@ -14,6 +14,26 @@
               } 
     %>
 
+      <tbody class="list" v-cloak>
+      <tr v-for="query in visibleItems">
+        <td>
+          <a :href="itemPath(query)" :class="{ dashboard: query.dashboard }">{{ query.name }}</a>
+          <span class="vars">{{ query.vars }}</span>
+        </td>
+        <% if Blazer.user_class %>
+          <td class="creator">{{ query.creator }}</td>
+        <% end %>
+      </tr>
+    </tbody>
+    <%= javascript_pack_tag 'hello_vue' %>
+
+    <script>
+  <%= blazer_js_var "dashboards", @dashboards %>
+  <%= blazer_js_var "queries", @queries %>
+  <%= blazer_js_var "more", @more %>
+</script>
+
+
      <%= render partial: "common/table", 
            locals: 
                {

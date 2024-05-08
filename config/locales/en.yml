@@ -30,7 +30,6 @@
 
 en:
   models:
-    users: Passenger
     data_center: Data Center
     sync_dms: Sync DMS
     sync_seasoft: Sync SEASOFT
@@ -106,12 +105,17 @@ en:
     brand_name: "Brand Name"
     created_at: "Created At"
     updated_at: "Updated At"
-  person:
-    name: Full Name
+  users:
+    id: "ID"
+    account: "Account"
+    email: "Email"
+    phone_number: "Phone Number"
+    full_name: "Full Name"
+    permission: "Permission"
+    status: "Status"
   article:
     title: Article Title
-    body: Main Content
-
+    body: Main Content  
   defaults:
     not_available: "N/A"
     search_label: "Search"

@@ -1,12 +1,10 @@
 vi:
   models:
-    person: Hành khách
     data_center: Trung tâm dữ liệu
     sync_dms: Đồng bộ từ DMS
     sync_seasoft: Đồng bộ từ SEASOFT
     sync_files: Đồng bộ từ files
     users: Quản lý người dùng
-
   ransack:
     asc: tăng dần
     desc: giảm dần
@@ -79,8 +77,14 @@ vi:
     brand_name: "Tên Brand"
     created_at: "Ngày tạo"
     updated_at: "Ngày cập nhật"
-  person:
-    name: Tên đầy đủ
+  users:
+    id: "ID"
+    account: "Tài khoản"
+    email: "Email"
+    phone_number: "Số điện thoại"
+    full_name: "Họ và tên"
+    permission: "Quyền hạn"
+    status: "Trạng thái"
   article:
     title: Tiêu đề bài viết
     body: Nội dung chính

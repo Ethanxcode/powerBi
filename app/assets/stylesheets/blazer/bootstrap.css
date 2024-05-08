@@ -2361,9 +2361,9 @@ caption {
   color: #777777;
   text-align: left;
 }
-th {
+/* th {
   text-align: left;
-}
+} */
 .table {
   width: 100%;
   max-width: 100%;

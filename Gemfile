@@ -29,8 +29,23 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 #
+gem "hotwire-rails"
 
 gem "blazer"
+
+# gem 'safely'
+
+# gem 'chartkick'
+
+# gem 'railties'
+
+# gem 'bundled_gems'
+
+gem "thor"
+
+gem "rack"
+
+gem "rackup"
 
 gem "faraday"
 

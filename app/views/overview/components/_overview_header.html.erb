@@ -6,7 +6,15 @@
   <div class="flex justify-between gap-[25px] items-center">
       <p class="text-base italic font-light"> (Last sync at 12:00:00 pm - 01/12/2023)</p>
     <%= render partial: "common/button", locals: { color: "-bg--color-green-4", icon: "icons/radix-icons_update.svg", text: "Synchronized" } %>
-    <%= render partial: "common/button", locals: { color: "-bg--color-blue", icon: "icons/mdi_report-box-plus-outline", text: "Tạo nhóm báo cáo" } %>
+
+
+
+          <%= link_to( blazer_path, class: "flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-blue hover:-bg--color-blue") do %>
+              <%= image_tag("icons/mdi_report-box-plus-outline", alt: "Tạo nhóm báo cáo") %>
+          <span class="text-base font-bold -text--text-white">
+              Tạo nhóm báo cáo
+            </span>
+          <% end %>
   </div>
 </div>
 <div class="flex justify-between items-start">

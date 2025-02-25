@@ -48,6 +48,11 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :queries
+    resources :checks
+    resources :dashboard
+
+
   get '/logout', to: 'sessions#destroy'
 
   # Defines the root path route ("/")

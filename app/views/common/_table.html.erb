@@ -22,7 +22,7 @@ The table is responsive and supports scrolling for large datasets.
     </div>
     <!-- Table body -->
     <div class="h-full <%= defined?(pagination) ? "overflow-x-scroll " : "md:max-h-[236px] xxl:max-h-[264px]" %> ">
-      <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400 ">
+      <table class="w-full text-sm text-center rtl:text-right text-gray-500 ">
         <!-- Table header row -->
         <thead class="text-xs capitalize max-h-[30px] overflow-x-scroll <%= defined?(color) ? color + " -text--text-white" : "uppercase -text--text-base " %>">
           <tr>
@@ -50,10 +50,10 @@ The table is responsive and supports scrolling for large datasets.
           <% else %>
             <% data.each_with_index do |item, index| %>
               <!-- Data row -->
-              <tr class="<%= index == data.length - 1 ? "border-b-0" : "border-b" %> <%= !defined?(color) ? "text-sm" : "text-[12px] leading-2" %>  bg-white capitalize dark:bg-gray-800 -text--text-base font-normal dark:-border--border-grey hover:-bg--black-5% text-center dark:hover:-bg--black-5%">
+              <tr class="<%= index == data.length - 1 ? "border-b-0" : "border-b" %> <%= !defined?(color) ? "text-sm" : "text-[12px] leading-2" %>  bg-white capitalize  -text--text-base font-normal hover:-bg--black-5% text-center ">
                 <% if defined?(pagination) %>
                   <!-- Action column -->
-                  <td scope="row" class="<%= !defined?(pagination) ? "py-[10px]" : "p-[10px]" %> font-medium whitespace-nowrap dark:-text--text-white">
+                  <td scope="row" class="<%= !defined?(pagination) ? "py-[10px]" : "p-[10px]" %> font-medium whitespace-nowrap ">
                     <% detailRoute = "edit_#{route}_path" %>
                     <% detailPath = send(detailRoute, item["id"]) %>
                     <%= link_to detailPath, class: "flex justify-center items-center" do %>
@@ -63,7 +63,7 @@ The table is responsive and supports scrolling for large datasets.
                     <% end %>
                   </td>
                   <!-- Index column -->
-                  <td scope="row" class="font-medium whitespace-nowrap w-[33px] dark:-text--text-white">
+                  <td scope="row" class="font-medium whitespace-nowrap w-[33px] ">
                     <%= index + 1 %>
                   </td>
                 <% end %>

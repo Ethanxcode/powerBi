@@ -14,7 +14,7 @@
         case value
         when 'approved'
           'icons/approved.svg'
-        when 'disable'
+        when 'disable'  
           'icons/disable.svg'
         when 'error'
           'icons/error.svg'

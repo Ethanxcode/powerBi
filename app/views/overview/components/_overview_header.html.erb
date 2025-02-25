@@ -9,7 +9,7 @@
 
 
 
-          <%= link_to( blazer_path, class: "flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-blue hover:-bg--color-blue") do %>
+          <%= link_to(blazer_path, class: "flex justify-center text-white items-center gap-[10px] py-[15px] min-w-[106px] h-full max-h-[55px] px-[20px] rounded-[4px] hover:opacity-80 hover:shadow-md drop-shadow-md -bg--color-blue hover:-bg--color-blue") do %>
               <%= image_tag("icons/mdi_report-box-plus-outline", alt: "Tạo nhóm báo cáo") %>
           <span class="text-base font-bold -text--text-white">
               Tạo nhóm báo cáo
@@ -23,6 +23,6 @@
     <%= render partial: "common/button", locals: { color: "-bg--grey ", text: "Nhóm thống kê 02" } %>
     <%= render partial: "common/button", locals: { color: "-bg--grey ", text: "Nhóm thống kê 03" } %>
 </div>
-    <%= render partial: "common/button", locals: { color: "-bg--brand-01 ", icon: "icons/setting-4.svg", text: "Custom" } %>
+    <%= render partial: "common/button", locals: { color: "-bg--brand-01", icon: "icons/setting-4.svg", text: "Custom" } %>
 </div>
 </div>

@@ -10,10 +10,10 @@ The user can also download the data centers in Excel format.
 <%
 =end
 %>
-<%= daithuan_title t('models.data_center') %>
+<%= daithuan_title t("models.data_center") %>
 <div class="pt-[25px]">
   <div class="flex justify-between gap-[25px] items-center flex-nowrap mb-[25px]">
-    <h2 class=" text-2xl font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r -from--brand-01 -to--color-orange  "><%= t('models.data_center')%> </h2>
+    <h2 class=" text-2xl font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r -from--brand-01 -to--color-orange  "><%= t("models.data_center")%> </h2>
 
     <div class="flex justify-between gap-[25px] items-center">
   <p class="text-base italic font-light">( <%= t("defaults.last_sync") %> <%= last_sync_time_for_table("data_center") %> )</p>
@@ -24,7 +24,7 @@ The user can also download the data centers in Excel format.
       <div data-controller="common">
         <div class="hidden" >
           <%= form_with(url: import_from_files_data_center_index_path, method: :post, local: true, multipart: true) do |form| %>
-        <%= form.file_field :file, id: "file-input", onchange: 'this.form.submit()' %>
+        <%= form.file_field :file, id: "file-input", onchange: "this.form.submit()" %>
         <%= form.submit "Import" %>
           <% end %>
         </div>
@@ -45,8 +45,8 @@ The user can also download the data centers in Excel format.
         <%= g.condition_fields(g.object.new_condition) do |c| %>
           <%= c.value_fields do |v| %>
             <div class="flex flex-col w-full">
-            <%= f.label :text_field, t('defaults.search_label'), class: "mb-[10px] text-base font-normal" %>
-        <%= v.text_field(:value, class: "-bg--bg-base hover:-bg--black-5% -text--text-base placeholder:-text--text-placeholder block w-full py-[24px] px-[12px] text-gray-900 border-none  focus:-outline--border-grey dark:-outline--border-grey hover:-bg--black-5 rounded-[6px]", placeholder: t('defaults.search_placeholder')) %>
+            <%= f.label :text_field, t("defaults.search_label"), class: "mb-[10px] text-base font-normal" %>
+        <%= v.text_field(:value, class: "-bg--bg-base hover:-bg--black-5% -text--text-base placeholder:-text--text-placeholder block w-full py-[24px] px-[12px] text-gray-900 border-none  focus:-outline--border-grey dark:-outline--border-grey hover:-bg--black-5 rounded-[6px]", placeholder: t("defaults.search_placeholder")) %>
             </div>
           <% end %>
           <%= c.attribute_fields do |a| %>
@@ -58,7 +58,7 @@ The user can also download the data centers in Excel format.
       </div>
           <% end %>
           <div class="flex flex-col">
-            <%= f.label :predicate_select,  t("defaults.method"), class: "mb-[10px] text-base font-normal" %>
+            <%= f.label :predicate_select, t("defaults.method"), class: "mb-[10px] text-base font-normal" %>
             <%= c.predicate_select({ only: %i(cont not_eq eq) }, { class: "-text--text-base md:min-w-[136px] text-sm border-0 block w-full -bg--bg-base hover:-bg--black-5% px-[12px] py-[24px] text-gray-900 bg-gray-50  focus:-outline--border-grey dark:-outline--border-grey rounded-[6px]" }) %>
           </div>
           <div class="flex flex-col">
@@ -85,21 +85,21 @@ The user can also download the data centers in Excel format.
       <div class="date_sort_select | w-full flex items-center">
 
 
-        <%= select_tag 'location_selector', 
-               content_tag(:option, 'Hiển thị', selected: true, disabled: true) +
-               options_from_collection_for_select(PAGE_SIZES, :itself, :itself, params[:per_page]), 
-               { 
-                 data: { controller: "common", action: "change->common#goToLocation" },
-                 style: "--tw-ring-offset-shadow: none; --tw-ring-shadow: none;",
-                 class: "inline-flex max-w-[130px] cursor-pointer items-center py-[5px] 
+        <%= select_tag "location_selector", 
+              content_tag(:option, "Hiển thị", selected: true, disabled: true) +
+              options_from_collection_for_select(PAGE_SIZES, :itself, :itself, params[:per_page]), 
+              { 
+                data: { controller: "common", action: "change->common#goToLocation" },
+                style: "--tw-ring-offset-shadow: none; --tw-ring-shadow: none;",
+                class: "inline-flex max-w-[130px] cursor-pointer items-center py-[5px] 
                          rounded-[4px]
                          -bg--bg-base border -text--text-base  -border--border-01 
                          hover:-bg--black-5% dark:hover:-bg--black-5%
                          font-medium text-sm focus:-border--border-01 dark:-border--black-40% dark:hover:-border--black-40%"
-               } 
+              } 
 %>
       </div>
-      <%= render partial: "common/button", locals: { color: "bg-gradient-to-r -from--brand-01 -to--color-orange", icon: "icons/mdi_filter.svg", text: t('defaults.filter') } %>
+      <%= render partial: "common/button", locals: { color: "bg-gradient-to-r -from--brand-01 -to--color-orange", icon: "icons/mdi_filter.svg", text: t("defaults.filter") } %>
     </div>
     <!-- Table body -->
     <%= turbo_frame_tag :result, data: { turbo_action: "advance" } do %>
@@ -110,7 +110,7 @@ The user can also download the data centers in Excel format.
         <tr>
             <% DataCenter.column_names.each_with_index do |field, index| %>
               <th class="<%= index == 1 ? "w-[32px]" : "px-[10px] min-w-[170px]" %> w-full py-[10px] text-balance">
-            <%= index == 1 ? 'STT' : t("attributes.#{field}") %>
+            <%= index == 1 ? "STT" : t("attributes.#{field}") %>
               </th>
             <% end %>
           </tr>
@@ -126,7 +126,7 @@ The user can also download the data centers in Excel format.
           <% else %>
             <% @data.each_with_index do |item, index| %>
               <!-- Data row -->
-              <tr class="<%= "border-b-0" if index == @data.length - 1 %> text-[12px] leading-2 bg-white capitalize dark:bg-gray-800 text-text-base font-normal dark:border-border-grey hover:bg-black-5% text-center dark:hover:bg-black-5%">
+              <tr class="<%= "border-b-0" if index == @data.length - 1 %> text-[12px] leading-2 bg-white capitalize text-text-base font-normal  hover:bg-black-5% text-center ">
                 <!-- Action column -->
                 <td scope="row" class="p-[10px] font-medium whitespace-nowrap ">
                   <%= link_to(edit_data_center_path(item.id), class: "flex justify-center items-center") do %>

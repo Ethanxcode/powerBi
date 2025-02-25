@@ -1,26 +1,26 @@
 var Routes = {
-  run_queries_path: function() {
-    return rootPath + "queries/run"
+  run_queries_path: function () {
+    return rootPath + 'queries/run'
   },
-  cancel_queries_path: function() {
-    return rootPath + "queries/cancel"
+  cancel_queries_path: function () {
+    return rootPath + 'queries/cancel'
   },
-  schema_queries_path: function(params) {
-    return rootPath + "queries/schema?" + $.param(params)
+  schema_queries_path: function (params) {
+    return rootPath + 'queries/schema?' + $.param(params)
   },
-  docs_queries_path: function(params) {
-    return rootPath + "queries/docs?" + $.param(params)
+  docs_queries_path: function (params) {
+    return rootPath + 'queries/docs?' + $.param(params)
   },
-  tables_queries_path: function(params) {
-    return rootPath + "queries/tables?" + $.param(params)
+  tables_queries_path: function (params) {
+    return rootPath + 'queries/tables?' + $.param(params)
   },
-  queries_path: function() {
-    return rootPath + "queries"
+  queries_path: function () {
+    return rootPath + 'queries'
   },
-  query_path: function(id) {
-    return rootPath + "queries/" + id
+  query_path: function (id) {
+    return rootPath + 'queries/' + id
   },
-  dashboard_path: function(id) {
-    return rootPath + "dashboards/" + id
+  dashboard_path: function (id) {
+    return rootPath + 'dashboards/' + id
   }
 }
